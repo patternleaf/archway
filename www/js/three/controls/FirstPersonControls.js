@@ -4,6 +4,8 @@
  * @author paulirish / http://paulirish.com/
  */
 
+// NOTE TOTALLY HACKED FOR ARCHWAY PROJECT.
+
 THREE.FirstPersonControls = function ( object, domElement ) {
 
 	this.object = object;
@@ -11,8 +13,8 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 	this.domElement = ( domElement !== undefined ) ? domElement : document;
 
-	this.movementSpeed = 1.0;
-	this.lookSpeed = 0.005;
+	this.movementSpeed = 48.0;
+	this.lookSpeed = 0.5;
 
 	this.lookVertical = true;
 	this.autoForward = false;
@@ -87,12 +89,12 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		if ( this.activeLook ) {
 
-			switch ( event.button ) {
-
-				case 0: this.moveForward = true; break;
-				case 2: this.moveBackward = true; break;
-
-			}
+			// switch ( event.button ) {
+			//
+			// 	case 0: this.moveForward = true; break;
+			// 	case 2: this.moveBackward = true; break;
+			//
+			// }
 
 		}
 
@@ -107,12 +109,12 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		if ( this.activeLook ) {
 
-			switch ( event.button ) {
-
-				case 0: this.moveForward = false; break;
-				case 2: this.moveBackward = false; break;
-
-			}
+			// switch ( event.button ) {
+			//
+			// 	case 0: this.moveForward = false; break;
+			// 	case 2: this.moveBackward = false; break;
+			//
+			// }
 
 		}
 
@@ -220,7 +222,7 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		var actualLookSpeed = delta * this.lookSpeed;
 
-		if ( !this.activeLook ) {
+		if ( !this.mouseDragOn ) {
 
 			actualLookSpeed = 0;
 
