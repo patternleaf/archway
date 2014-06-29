@@ -224,14 +224,14 @@
 							for (var i = 0; i < nStrips; i++) {
 								var strip = getLightStrip(rail.curve, startU);
 								for (var j = 0; j < strip.points.length; j++) {
-									var l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 1, 20);
-									var h = new THREE.PointLightHelper(l, 1);
+									var l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 40);
+									//var h = new THREE.PointLightHelper(l, 1);
 									var p = rail.curve.getPointAt(strip.points[j]);
 
 									l.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
 									rail.lights.push(l);
 									scene.add(l);
-									scene.add(h);
+									//scene.add(h);
 								}
 								startU += strip.total;
 							}
@@ -323,19 +323,24 @@
 			function animate() {
 
 				var delta = clock.getDelta();
+				var elapsed = clock.getElapsedTime();
 
 				requestAnimationFrame( animate );
 
 				if ( t > 1 ) t = 0;
-				
-				// var railNum = 1;
-				// _([lightRail1, lightRail2]).each(function(rail) {
-				// 	var nLights = rail.lights.length;
-				// 	_(rail.lights).each(function(light, index) {
-				// 		light.color = light.color.offsetHSL(.01 * railNum, 0, 1 - light.color.getHSL().l);
-				// 	});
-				// 	railNum++;
-				// });
+
+				var railNum = 1;
+				_([lightRail1, lightRail2]).each(function(rail) {
+					var nLights = rail.lights.length;
+					_(rail.lights).each(function(light, index) {
+						var hsl = light.color.getHSL();
+						var lum = 0.6 * Math.abs(Math.sin(elapsed + Math.PI * 8 * index / nLights));
+						lum += 0.3 * Math.cos(elapsed * 4 + Math.PI * 12 * index / nLights);
+						var hue = Math.abs(Math.sin(elapsed * (1 - index / nLights)));
+						light.color.setHSL(hue, hsl.s, lum);
+					});
+					railNum++;
+				});
 				
 				controls.update(delta);
 				render();
