@@ -334,10 +334,9 @@
 					var nLights = rail.lights.length;
 					_(rail.lights).each(function(light, index) {
 						var hsl = light.color.getHSL();
-						var lum = 0.6 * Math.abs(Math.sin(elapsed + Math.PI * 8 * index / nLights));
-						lum += 0.3 * Math.cos(elapsed * 4 + Math.PI * 12 * index / nLights);
-						var hue = Math.abs(Math.sin(elapsed * (1 - index / nLights)));
-						light.color.setHSL(hue, hsl.s, lum);
+						var lum = 0.8 * Math.abs(Math.sin(elapsed + Math.PI * 8 * index / nLights));
+						var hue = Math.abs(Math.sin(elapsed / 12 * (1 - index / nLights)));
+						light.color.setHSL(hue, 1.0, lum);
 					});
 					railNum++;
 				});
