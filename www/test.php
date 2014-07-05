@@ -25,10 +25,8 @@
 
 			a { color: skyblue }
 			
-			#controls {
+			.ui-overlay {
 				position:absolute;
-				left:1em;
-				bottom:1em;
 				color:#ddd;
 				font-size:12px;
 				font-family:Helvetica, sans-serif;
@@ -36,6 +34,30 @@
 				background:rgba(255, 255, 255, 0.2);
 				border-radius:0.5em;
 				padding:0.5em;
+			}
+			
+			#legend {
+				right:1em;
+				bottom:1em;
+				width:200px;
+			}
+			
+			#legend dl {
+				margin:0;
+			}
+			#legend dd, #legend dt {
+				float:left;
+				min-width:80px;
+				display:block;
+				margin:0;
+			}
+			#legend dt {
+				clear:left;
+			}
+			
+			#controls {
+				left:1em;
+				bottom:1em;
 			}
 			
 			#controls h1 {
@@ -99,7 +121,7 @@
 	</head>
 	<body>
 		
-		<div id="controls">
+		<div id="controls" class="ui-overlay">
 			<button id="toggle-play">Pause</button>
 			<form>
 				<h1>Gate 1</h1>
@@ -123,10 +145,23 @@
 			<button id="generate-opc-layout">Generate OPC Layout</button>
 		</div>
 		
+		<div id="legend" class="ui-overlay">
+			<dl>
+				<dt>fwd</dt><dd>W</dd>
+				<dt>back</dt><dd>S</dd>
+				<dt>truck left</dt><dd>A</dd>
+				<dt>truck right</dt><dd>D</dd>
+				<dt>up</dt><dd>R</dd>
+				<dt>down</dt><dd>F</dd>
+				<dt>pan/tilt</dt><dd>click+drag mouse</dd>
+			</dl>
+		</div>
+		
 		<div id="opc-modal">
 			<div id="opc-close-button">x</div>
 			<textarea id="opc-code"></textarea>
 		</div>
+		
 		
 		<script src="js/underscore-min.js"></script>
 		<script src="js/jquery-2.1.1.min.js"></script>
