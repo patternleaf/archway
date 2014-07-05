@@ -117,6 +117,12 @@
 				color:#8f8;
 			}
 			
+			#loading-model-indicator {
+				width: 200px;
+				left:100px;
+				top:100px;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -162,6 +168,7 @@
 			<textarea id="opc-code"></textarea>
 		</div>
 		
+		<div class="ui-overlay" id="loading-model-indicator">Loading model&hellip;</div>
 		
 		<script src="js/underscore-min.js"></script>
 		<script src="js/jquery-2.1.1.min.js"></script>
@@ -236,6 +243,8 @@
 				dae.updateMatrix();
 				
 				modifyModelMesh(dae, 'root');
+
+				$('#loading-model-indicator').fadeOut();
 
 				init();
 				animate();
