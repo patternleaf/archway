@@ -330,7 +330,7 @@
 
 				//console.log('rail objects: ', gLightRail1, gLightRail2);
 				
-				_([gLightRail1, gLightRail2]).each(function(rail) {
+				_([gLightRail1, gLightRail2]).each(function(rail, railIndex) {
 					_(rail.meshes).each(function(mesh) {
 						var sphere = new THREE.SphereGeometry(0.5, 8, 8);
 						var curveSegments = [];	// will be 10 total
@@ -373,7 +373,7 @@
 						// scene.add(tempLine);
 						
 						//return;
-						createLightsForRail(rail);
+						createLightsForRail(rail, railIndex);
 					});
 				});
 
@@ -629,7 +629,7 @@
 				});
 			}
 			
-			function createLightsForRail(rail) {
+			function createLightsForRail(rail, railIndex) {
 				_(['top', 'bottom']).each(function(side) {
 					var color = new THREE.Color(0x7788ff);
 					
@@ -645,7 +645,10 @@
 
 							l.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
 							rail.lights.push(l);
-							gOPCPointList.push({ point: [l.position.x, l.position.y, l.position.z] });
+							gOPCPointList.push({ 
+								point: [l.position.x, l.position.y, l.position.z],
+								gate: railIndex
+							});
 							var max = _([l.position.x, l.position.y, l.position.z]).max();
 							if (max > gOPCMaxPointValue) {
 								gOPCMaxPointValue = max;
@@ -690,7 +693,8 @@
 				return JSON.stringify(_(gOPCPointList).map(
 					function(pt) { 
 						return { 
-							point: [pt.point[0] / gOPCMaxPointValue, pt.point[1] / gOPCMaxPointValue, pt.point[2] / gOPCMaxPointValue ] 
+							point: [pt.point[0] / gOPCMaxPointValue, pt.point[1] / gOPCMaxPointValue, pt.point[2] / gOPCMaxPointValue ],
+							gate: pt.gate 
 						}; 
 					}
 				));
