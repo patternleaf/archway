@@ -1,0 +1,14 @@
+{
+	"manifest_version": 2,
+	"name": "Archway Simulator",
+	"version": "1",
+	"minimum_chrome_version": "24",
+	"permissions": [ "webview", { "socket" : ["tcp-listen"] }  ],
+	"content_scripts": [{
+		"matches": ["*://archway.patternleaf.local/*"],
+		"js": ["underscore-min.js", "tcp-server.js", "opc-server.js", "listener.js"]
+	}],
+	"externally_connectable": {
+		"matches": ["*://*.patternleaf.local/*", "*://*.patternleaf.com/*"]
+	}
+}

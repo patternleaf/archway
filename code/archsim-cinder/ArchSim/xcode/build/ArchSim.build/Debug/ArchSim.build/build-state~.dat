@@ -1,0 +1,253 @@
+TArchSim
+v6
+r1
+cCheck dependencies
+cProcessInfoPlistFile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Info.plist /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist
+cCompileXIB /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib
+cCpResource /Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns
+cProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler
+cProcessPCH /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/SDKSettings.plist
+c00000000532066F5000000000000044C
+t1394632437
+s1100
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/CoreServices/SystemVersion.plist
+c00000000532066F500000000000001DE
+t1394632437
+s478
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns
+c0000000053CBE1FB000000000005A168
+t1405870587
+s369000
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp
+c0000000053CBE1FB000000000000012A
+t1405870587
+s298
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm
+c0000000053CBE1FB0000000000000339
+t1405870587
+s825
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m
+c0000000053CBE1FB0000000000000074
+t1405870587
+s116
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch
+c0000000053CBE1FB000000000000008E
+t1405870587
+s142
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist
+c0000000053CBE1FB0000000000000462
+t1405870587
+s1122
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Info.plist
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/PkgInfo
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Resources/MainMenu.nib
+t2
+s0
+
+N/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib
+c0000000053CBE1FB00000000000247DC
+t1405870587
+s149468
+
+N/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch
+t1405870633
+s122040
+
+N/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch
+t1405870635
+s14304792
+
+N/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch
+t1405870635
+s17547736
+
+CBuild AST from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp
+r0
+
+CBuild AST from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm
+r0
+
+CBuild AST from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m
+r0
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependenciese55fa7a9197cb941^43ffb4a9197cb941^---0#1#1#--18"Check dependencies36"EBFF6626-9DCC-489E-BC50-082AFC1C9434-
+
+CCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s427563435.321314
+e427563435.407659
+r0
+xCompileC
+xbuild/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+oIn file included from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp:1:
+o/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/../include/ArchSimApp.h:3:10: fatal error: 'cinder/app/AppCocoaView.h' file not found
+o#include "cinder/app/AppCocoaView.h"
+o         ^
+o1 error generated.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection86"Compile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp220"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler855b52ab197cb941^e25b68ab197cb941^-323"In file included from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp:1:/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/../include/ArchSimApp.h:3:10: fatal error: 'cinder/app/AppCocoaView.h' file not found#include "cinder/app/AppCocoaView.h"         ^1 error generated.1(36%IDEClangDiagnosticActivityLogMessage2@42"'cinder/app/AppCocoaView.h' file not found-427563435#18446744073709551615#0#1(2@103"In file included from /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp:1:-427563435#18446744073709551615#0#-0#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@85"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp0000000000000000^0#9#0#9#9#0#21"Apple LLVM 5.0 Notice--2#27"com.apple.dt.IDE.diagnostic3@87"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/include/ArchSimApp.h0000000000000000^2#9#2#9#23#0#29"Lexical or Preprocessor Issue--0#0#1#-19%DVTDocumentLocation4@85"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp0000000000000000^3189"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++ -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug -include /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch -MMD -MT dependencies -MF /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.d --serialize-diagnostics /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.dia -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimApp.cpp -o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimApp.o36"1080F8F6-B6D9-4278-96B8-A9A5CD79DA91-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler
+s427563435.321776
+e427563435.511485
+r0
+xCompileC
+xbuild/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm
+xnormal
+xi386
+xobjective-c++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+o/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm:1:10: fatal error: 'cinder/Cinder.h' file not found
+o#include "cinder/Cinder.h"
+o         ^
+o1 error generated.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection90"Compile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm239"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler427a52ab197cb941^9ef082ab197cb941^-192"/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm:1:10: fatal error: 'cinder/Cinder.h' file not found#include "cinder/Cinder.h"         ^1 error generated.-0#0#1#-19%DVTDocumentLocation2@89"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm0000000000000000^3430"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++ -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug -include /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch -MMD -MT dependencies -MF /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.d --serialize-diagnostics /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.dia -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/ArchSimDelegate.mm -o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/ArchSimDelegate.o36"665EC972-EAD9-4371-9114-DAA89502D333-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CCompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s427563435.322335
+e427563435.811491
+r1
+xCompileC
+xbuild/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection78"Compile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m214"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler10e652ab197cb941^200ad2ab197cb941^---0#0#1#-19%DVTDocumentLocation2@77"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m0000000000000000^3205"CompileC build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug -include /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch -MMD -MT dependencies -MF /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.d --serialize-diagnostics /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.dia -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/src/main.m -o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/Objects-normal/i386/main.o36"E7390EEB-6A31-4E3B-AD1D-0BB46F116D59-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CCompileXIB /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib
+s427563433.713138
+e427563433.781894
+r1
+xCompileXIB
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection97"Compiling /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib32"CompileXIB en.lproj/MainMenu.xib44a4b6a9197cb941^882ac8a9197cb941^---0#0#1#-19%DVTDocumentLocation2@94"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib0000000000000000^577"CompileXIB en.lproj/MainMenu.xib    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export XCODE_DEVELOPER_USR_PATH=/Applications/Xcode.app/Contents/Developer/usr/bin/..    /Applications/Xcode.app/Contents/Developer/usr/bin/ibtool --errors --warnings --notices --minimum-deployment-target 10.7 --output-format human-readable-text --compile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Resources/MainMenu.nib /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/en.lproj/MainMenu.xib36"2E314A2F-EA85-45AA-9B13-A299F50F15CA-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CCpResource /Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns
+s427563433.713932
+e427563433.716593
+r1
+xCpResource
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns
+xbuild/Debug/ArchSim.app/Contents/Resources/CinderApp.icns
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection62"Copy build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns153"CpResource /Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns67d6b6a9197cb941^d6fdb7a9197cb941^---0#0#1#-19%DVTDocumentLocation2@130"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns00341434deffdf42^533"CpResource /Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns build/Debug/ArchSim.app/Contents/Resources/CinderApp.icns    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Users/eric/Development/archway/code/archsim-cinder/ArchSim/resources/CinderApp.icns /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Resources36"7851415D-3E3B-4653-99D6-E0DAB0406A01-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CLd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/MacOS/ArchSim normal i386
+r0
+
+CProcessInfoPlistFile /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Info.plist /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist
+s427563433.709162
+e427563433.712461
+r1
+xProcessInfoPlistFile
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Info.plist
+x/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection84"Process /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist75"ProcessInfoPlistFile build/Debug/ArchSim.app/Contents/Info.plist Info.plist5a9cb5a9197cb941^cbf8b7a9197cb941^---0#0#1#-19%DVTDocumentLocation2@83"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist0000000000000000^525"ProcessInfoPlistFile build/Debug/ArchSim.app/Contents/Info.plist Info.plist    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    builtin-infoPlistUtility /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/Info.plist -genpkginfo /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app/Contents/Info.plist36"0B00602E-D524-44A4-82E3-C62BDAA853F5-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CProcessPCH /Users/eric/Library/Developer/Xcode/DerivedData/ArchSim-eqhhbuzsodrqpngxceaarefscpww/Index/PrecompiledHeaders/ArchSim_Prefix-cixdusnkitgletgcbbzmbboypgzq_ast/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s427563433.783148
+e427563435.045421
+r1
+xProcessPCH
+x/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch
+xArchSim_Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection29"Precompile ArchSim_Prefix.pch282"ProcessPCH /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compilerbd8ac8a9197cb941^e0a20bab197cb941^---0#0#1#-19%DVTDocumentLocation2@91"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch0000000000000000^3256"ProcessPCH /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -mmacosx-version-min=10.7 -g -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug --serialize-diagnostics /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.dia -MMD -MT dependencies -MF /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.d -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch -o /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-gicqclohxhhrireqciqdfrmfcmfn/ArchSim_Prefix.pch.pch36"C7C70A6B-7BBA-4E02-A362-EDE9EFA67906-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CProcessPCH++ /Users/eric/Library/Developer/Xcode/DerivedData/ArchSim-eqhhbuzsodrqpngxceaarefscpww/Index/PrecompiledHeaders/ArchSim_Prefix-avaawyutmzlungciphtlbfwrgxby_ast/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH++ /Users/eric/Library/Developer/Xcode/DerivedData/ArchSim-eqhhbuzsodrqpngxceaarefscpww/Index/PrecompiledHeaders/ArchSim_Prefix-gmibllclejeaemcfylaxlvjvhelg_ast/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler
+s427563433.782584
+e427563433.823932
+r1
+xProcessPCH++
+x/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch
+xArchSim_Prefix.pch
+xnormal
+xi386
+xc++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection29"Precompile ArchSim_Prefix.pch276"ProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler4b72c8a9197cb941^bbedd2a9197cb941^---0#0#1#-19%DVTDocumentLocation2@91"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch0000000000000000^3202"ProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x c++-header -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug --serialize-diagnostics /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.dia -MMD -MT dependencies -MF /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.d -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch -o /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-ahuyxbdizhbdpcfmwsanylfdqikj/ArchSim_Prefix.pch.pch36"C6DCD330-311A-4095-975A-42403AE611E3-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler
+s427563433.782839
+e427563435.320509
+r1
+xProcessPCH++
+x/var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch
+xArchSim_Prefix.pch
+xnormal
+xi386
+xobjective-c++
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection29"Precompile ArchSim_Prefix.pch286"ProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler0e84c8a9197cb941^130d52ab197cb941^---0#0#1#-19%DVTDocumentLocation2@91"file:///Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch0000000000000000^3415"ProcessPCH++ /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch ArchSim_Prefix.pch normal i386 objective-c++ com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode    export LANG=en_US.US-ASCII    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c++-header -arch i386 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=c++11 -stdlib=libc++ -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Wno-implicit-atomic-properties -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wno-non-virtual-dtor -Wno-overloaded-virtual -Wno-exit-time-destructors -Wno-missing-braces -Wparentheses -Wswitch -Wno-unused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wno-empty-body -Wno-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wno-constant-conversion -Wno-int-conversion -Wno-bool-conversion -Wno-enum-conversion -Wno-shorten-64-to-32 -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wno-undeclared-selector -Wno-deprecated-implementations -Wno-c++11-extensions -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk -fasm-blocks -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -Winvalid-offsetof -mmacosx-version-min=10.7 -g -fvisibility-inlines-hidden -Wno-sign-conversion -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-generated-files.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-own-target-headers.hmap -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-all-target-headers.hmap -iquote /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/ArchSim-project-headers.hmap -iquote../../../../Cinder/include -iquote../include -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/include -I../../../../Cinder/boost -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources/i386 -I/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/ArchSim.build/Debug/ArchSim.build/DerivedSources -F/Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug --serialize-diagnostics /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.dia -MMD -MT dependencies -MF /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.d -c /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/ArchSim_Prefix.pch -o /var/folders/32/3d481vf97f1391vvd4hc7qr80000gn/C/com.apple.DeveloperTools/5.1.1-5B1008/Xcode/SharedPrecompiledHeaders/ArchSim_Prefix-hguyrzmagdxpnqdcnkjvirwbykaj/ArchSim_Prefix.pch.pch36"A340C90D-0511-49A2-BFDE-D29FD4431D65-
+b87594B98-D3E0-4B9E-B078-750B40120ECD
+
+CTouch /Users/eric/Development/archway/code/archsim-cinder/ArchSim/xcode/build/Debug/ArchSim.app
+r0
+

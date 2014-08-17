@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D3C885AD-5661-44D8-B049-EA4B78E291F0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Archway Simulator</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D0153176-7B8D-456C-A80C-CD7A4FF2DA94</key>
+		<string>ssh://github.com/patternleaf/archway.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>code/archway-simulator/Archway Simulator/Archway Simulator.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D0153176-7B8D-456C-A80C-CD7A4FF2DA94</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/patternleaf/archway.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D0153176-7B8D-456C-A80C-CD7A4FF2DA94</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D0153176-7B8D-456C-A80C-CD7A4FF2DA94</string>
+			<key>IDESourceControlWCCName</key>
+			<string>archway</string>
+		</dict>
+	</array>
+</dict>
+</plist>
