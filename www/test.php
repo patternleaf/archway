@@ -36,6 +36,10 @@
 				padding:0.5em;
 			}
 			
+			.ui-overlay.dark {
+				
+			}
+			
 			#legend {
 				right:1em;
 				bottom:1em;
@@ -79,8 +83,8 @@
 				color:#aaa;
 			}
 			
-			#controls #toggle-play {
-				float:right;
+			#controls button {
+				display:block;
 			}
 			
 			#opc-modal {
@@ -129,6 +133,7 @@
 		
 		<div id="controls" class="ui-overlay">
 			<button id="toggle-play">Pause</button>
+			<!--
 			<form>
 				<h1>Gate 1</h1>
 				<h2>Start - Top <span class="n-strips" id="gate-1-top-n-strips"></span></h2>
@@ -148,7 +153,11 @@
 				<input type="range" id="gate-2-bottom-start-slider" min="0" max="1" value="0.7" step="0.0001">
 				<input type="number" id="gate-2-bottom-start-number" step="0.1"> in
 			</form>
-			<button id="generate-opc-layout">Generate OPC Layout</button>
+			-->
+			<button id="reset">Reset</button>
+			<button id="switch-renderers"></button>
+			<hr>
+			<button id="show-opc-layout">Show OPC Layout</button>
 		</div>
 		
 		<div id="legend" class="ui-overlay">
@@ -172,6 +181,7 @@
 		
 		<script src="js/underscore-min.js"></script>
 		<script src="js/jquery-2.1.1.min.js"></script>
+		<script src="js/cookies.js"></script>
 		<script src="js/three/three.min.js"></script>
 		<script src="js/three/loaders/ColladaLoader.js"></script>
 		<script src="js/three/renderers/WebGLDeferredRenderer.js"></script>
@@ -185,12 +195,37 @@
 		<script src="js/three/controls/FirstPersonControls.js"></script>
 
 		<script>
+			console.log(docCookies.getItem('archway-settings'));
+			var gSettings = docCookies.hasItem('archway-settings') ? JSON.parse(docCookies.getItem('archway-settings')) : {
+				useDeferredRenderer: false,
+				camera: {
+					position: {
+						x: 50,
+						y: 100,
+						z: -100
+					}
+				},
+				controls: {
+					lat: 0,
+					lon: -180,
+					phi: 0,
+					theta: 0
+				}
+			};
+			
+			var gResetting = false;
+			$(window).on('unload', function() {
+				if (!gResetting) {
+					docCookies.setItem('archway-settings', JSON.stringify(gSettings));
+				}
+			});
 
 			// LED strip parameters
-			var kStripLength = 40.5;
+			// strips come in pairs with a box between them
+			var kStripLength = 39.5;
 			var kNLightsPerStrip = 60;
 			var kLEDPitch = 0.66;
-			var kInterStripOffset = 1;
+			var kInterStripOffset = 2;
 
 			var container;
 
@@ -201,14 +236,18 @@
 					meshes: [],
 					curve: null,
 					totalLength: 0,
-					nStrips: {
-						top: 7,
-						bottom: 5
-					},
-					startOffsets: {
-						top: 0.14,
-						bottom: 0.65
-					},
+					stripPairOffsets: [
+						// roughly .097 is one strip pair length
+						0.101,
+						0.2,
+						0.297,
+						0.394,
+						0.61,
+						0.707,
+						0.804,
+						//0.901
+						0.887
+					],
 					strips: [],
 					lights: []
 				}, 
@@ -217,14 +256,20 @@
 					meshes: [],
 					curve: null,
 					totalLength: 0,
-					nStrips: {
-						top: 9,
-						bottom: 4
-					},
-					startOffsets: {
-						top: 0.13,
-						bottom: 0.7
-					},
+					stripPairOffsets: [
+						// rougly .083 is one strip pair length
+						0.096,
+						0.18,
+						0.263,
+						0.346,
+						0.429,
+						//0.512,
+						0.515,
+						0.653,
+						0.736,
+						0.819,
+						0.904
+					],
 					strips: [],
 					lights: []
 				},
@@ -299,7 +344,11 @@
 				document.body.appendChild( container );
 
 				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000 );
-				camera.position.set( 200, 100, -200 );
+				camera.position.set(
+					gSettings.camera.position.x,
+					gSettings.camera.position.y,
+					gSettings.camera.position.z
+				);
 				
 				scene = new THREE.Scene();
 
@@ -332,8 +381,8 @@
 				
 				_([gLightRail1, gLightRail2]).each(function(rail, railIndex) {
 					_(rail.meshes).each(function(mesh) {
-						var sphere = new THREE.SphereGeometry(0.5, 8, 8);
-						var curveSegments = [];	// will be 10 total
+						//var sphere = new THREE.SphereGeometry(0.5, 8, 8);
+						//var curveSegments = [];	// will be 10 total
 
 						// In the model, the light rails are quad strips. (Using regular line geometry didn't result in
 						// correctly ordered vertices for whatever reason.) First, get only the points on the front of the
@@ -343,9 +392,10 @@
 							lightRailPoints.reverse();
 						}
 
-						rail.curve = new THREE.SplineCurve(_(lightRailPoints).map(function(pt) { 
+						rail.curve = new THREE.SplineCurve(_(lightRailPoints).map(function(pt) {
+							// transpose ... 
 							return new THREE.Vector2(pt.z, pt.y); 
-						}))
+						}));
 						
 						rail.totalLength = rail.curve.getLength();
 
@@ -380,7 +430,7 @@
 
 				// Lights
 
-				scene.add( new THREE.AmbientLight( 0xcccccc ) );
+				scene.add( new THREE.AmbientLight( 0x444444 ) );
 
 				var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0x555544 );
 				var directionalLight2 = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0x444466 );
@@ -410,14 +460,21 @@
 				
 				var dpr = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
 
-				//renderer = new THREE.WebGLRenderer();
-
-				renderer = new THREE.WebGLDeferredRenderer({ 
-					width: window.innerWidth, 
-					height: window.innerHeight, 
-					scale: 1, 
-					antialias: false 	// doesn't work right on retina. :(
-				});
+				if (gSettings.useDeferredRenderer) {
+					renderer = new THREE.WebGLDeferredRenderer({
+						width: window.innerWidth,
+						height: window.innerHeight,
+						scale: 1,
+						antialias: false 	// doesn't work right on retina. :(
+					});
+				}
+				else {
+					renderer = new THREE.WebGLRenderer({
+						width: window.innerWidth,
+						height: window.innerHeight,
+						scale: 1
+					});
+				}
 
 //				renderer.setSize( window.innerWidth, window.innerHeight );
 				//renderer.renderer.setViewport(0, 0, window.innerWidth * dpr, window.innerHeight * dpr);
@@ -432,8 +489,10 @@
 				//camera.lookAt(new THREE.Vector3( 20, 20, 20 ));
 
 				controls = new THREE.FirstPersonControls(camera, renderer.domElement);
-				controls.lon = -180;
-
+				controls.lon = gSettings.controls.lon;
+				controls.lat = gSettings.controls.lat;
+				controls.phi = gSettings.controls.phi;
+				controls.theta = gSettings.controls.theta;
 
 				scene.add(new THREE.AxisHelper(120));
 
@@ -445,19 +504,7 @@
 					function(pt) { return { point: [pt.point[0] / gOPCMaxPointValue, pt.point[1] / gOPCMaxPointValue, pt.point[2] / gOPCMaxPointValue ] }; }
 				)));
 				*/
-				
-				$('#gate-1-top-start-number, #gate-1-bottom-start-number').attr('min', 0);
-				$('#gate-1-top-start-number, #gate-1-bottom-start-number').attr('max', gLightRail1.totalLength);
-
-				$('#gate-2-top-start-number, #gate-2-bottom-start-number').attr('min', 0);
-				$('#gate-2-top-start-number, #gate-2-bottom-start-number').attr('max', gLightRail2.totalLength);
-
-				$('#gate-1-top-n-strips').html(gLightRail1.nStrips.top + ' strips');
-				$('#gate-1-bottom-n-strips').html(gLightRail1.nStrips.bottom + ' strips');
-				$('#gate-2-top-n-strips').html(gLightRail2.nStrips.top + ' strips');
-				$('#gate-2-bottom-n-strips').html(gLightRail2.nStrips.bottom + ' strips');
-				
-				updateNumericValues();
+				onWindowResize();
 			}
 
 
@@ -487,10 +534,22 @@
 				_([gLightRail1, gLightRail2]).each(function(rail) {
 					var nLights = rail.lights.length;
 					_(rail.lights).each(function(light, index) {
-						var hsl = light.color.getHSL();
-						var lum = 0.8 * Math.abs(Math.sin(elapsed + Math.PI * 8 * index / nLights));
-						var hue = Math.abs(Math.sin(elapsed / 12 * (1 - index / nLights)));
-						light.color.setHSL(hue, 1.0, lum);
+						var hsl, lum, hue;
+						if (gSettings.useDeferredRenderer) {
+							hsl = light.color.getHSL();
+						}
+						else {
+							hsl = light.material.color.getHSL();
+						}
+						lum = 0.8 * Math.abs(Math.sin(elapsed + Math.PI * 8 * index / nLights));
+						hue = Math.abs(Math.sin(elapsed / 12 * (1 - index / nLights)));
+						if (gSettings.useDeferredRenderer) {
+							light.color.setHSL(hue, 1.0, lum);
+						}
+						else {
+							light.material.color.setHSL(hue, 1.0, lum);
+						}
+
 					});
 					railNum++;
 				});
@@ -502,6 +561,11 @@
 					requestAnimationFrame( animate );
 				}
 
+				gSettings.camera.position = camera.position;
+				gSettings.controls.lat = controls.lat;
+				gSettings.controls.lon = controls.lon;
+				gSettings.controls.phi = controls.phi;
+				gSettings.controls.theta = controls.theta;
 			}
 
 			function render() {
@@ -543,6 +607,45 @@
 				
 				return result;
 			}
+			
+			// points are ordered: 1 strip going up in U, then 1 strip going down in U.
+			// 
+			// 		 D --------- C [center pt] A ---------- B
+			//
+			// A: first point 
+			// B: end of first strip
+			// C: beginning of second strip
+			// D: end of second strip
+			//
+			function getStripPair(centerU, length) {
+				var result = {
+						points: {
+							up: [],
+							down: []
+						},
+						endpoints: {
+							up: [],
+							down: []
+						}
+					},
+					factor = 1 / length;
+				
+				for (var i = 0; i < kNLightsPerStrip; i++) {
+					result.points.up.push(centerU + (kInterStripOffset / 2 * factor) + i * kLEDPitch * factor);
+				}
+				
+				result.endpoints.up.push(result.points[0]);
+				result.endpoints.up.push(result.points[result.points.length - 1]);
+				
+				for (i = 0; i < kNLightsPerStrip; i++) {
+					result.points.down.push(centerU - (kInterStripOffset / 2 * factor) - i * kLEDPitch * factor);
+				}
+				
+				result.endpoints.down.push(result.points[kNLightsPerStrip]);
+				result.endpoints.down.push(result.points[result.points.length - 1]);
+				
+				return result;
+			}
 
 			function getInches(length, u) {
 				return length * u;
@@ -573,6 +676,7 @@
 					gAnimating = true;
 				}
 			}
+			/*
 			function updateNumericValues() {
 				$('#gate-1-top-start-number').val(
 					getInches(gLightRail1.totalLength, $('#gate-1-top-start-slider').val()).toFixed(1)
@@ -628,37 +732,113 @@
 					});
 				});
 			}
-			
+			*/
 			function createLightsForRail(rail, railIndex) {
-				_(['top', 'bottom']).each(function(side) {
-					var color = new THREE.Color(0x7788ff);
+				var color = new THREE.Color(0x7788ff);
+	
+				_(rail.stripPairOffsets).each(function(stripPairOffset) {
+	
+					var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+					var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x777777 }));
+					var boxParametricPos = rail.curve.getPointAt(stripPairOffset);
+					boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+					scene.add(boxMesh);
+				
+					var pair = getStripPair(stripPairOffset, rail.totalLength);
+				
+					_(['up', 'down']).each(function(stripName) {
+						var stripCurvePts = [];
+						for (var i = 0; i < pair.points[stripName].length; i++) {
+							var l;
+							if (gSettings.useDeferredRenderer) {
+								l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
+							}
+							else {
+								l = new THREE.Mesh(
+									new THREE.SphereGeometry(0.5, 4, 4), 
+									new THREE.MeshBasicMaterial({ color: color.offsetHSL(.001, 0, 0) })
+								);
+							}
+						
+							var ledPoint = rail.curve.getPointAt(pair.points[stripName][i]);
 					
-					var nStrips = rail.nStrips[side];
-					var startU = rail.startOffsets[side];
-					
-					for (var i = 0; i < nStrips; i++) {
-						var strip = getLightStrip(rail.totalLength, startU);
-						for (var j = 0; j < strip.points.length; j++) {
-							var l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
-							//var h = new THREE.PointLightHelper(l, 1);
-							var p = rail.curve.getPointAt(strip.points[j]);
-
-							l.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
+							l.position = new THREE.Vector3(0, ledPoint.y, ledPoint.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
+							stripCurvePts.push(l.position.clone());
 							rail.lights.push(l);
+					
 							gOPCPointList.push({ 
 								point: [l.position.x, l.position.y, l.position.z],
 								gate: railIndex
 							});
+					
 							var max = _([l.position.x, l.position.y, l.position.z]).max();
 							if (max > gOPCMaxPointValue) {
 								gOPCMaxPointValue = max;
 							}
 							scene.add(l);
-							//scene.add(h);
 						}
-						startU += strip.total;
-					}
+					
+					
+					
+						// var stripCurve = new THREE.SplineCurve(stripCurvePts);
+						// var lineGeo = new THREE.Geometry();
+						// lineGeo.vertices = stripCurve.getSpacedPoints(20);
+						// console.log(lineGeo.vertices);
+						// var line = new THREE.Line(lineGeo, new THREE.LineBasicMaterial({ color: 0xbbaadd }));
+						// scene.add(line);
+					
+						/*
+						var stripCurvePath = new THREE.CurvePath();
+						stripCurvePath.add(stripCurve);
+						var stripShape = new THREE.Shape(
+							[stripCurvePts[0], 
+							new THREE.Vector2(0, 0),
+							new THREE.Vector2(1, 0),
+							new THREE.Vector2(1, 1),
+							new THREE.Vector2(0, 1),
+						]);
+						console.log(stripCurvePath);
+						var stripGeo = stripShape.extrude({
+							extrudePath: stripCurvePath
+						});
+						var stripMesh = new THREE.Mesh(
+							stripGeo, new THREE.MeshBasicMaterial({ color: 0x777777 })
+						);
+						scene.add(stripMesh);
+						*/
+					});
 				});
+
+
+
+
+				/*
+				var nStrips = rail.nStrips[side];
+				var startU = rail.startOffsets[side];
+
+				for (var i = 0; i < nStrips; i++) {
+					var strip = getLightStrip(rail.totalLength, startU);
+					for (var j = 0; j < strip.points.length; j++) {
+						var l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
+						//var h = new THREE.PointLightHelper(l, 1);
+						var p = rail.curve.getPointAt(strip.points[j]);
+
+						l.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
+						rail.lights.push(l);
+						gOPCPointList.push({ 
+							point: [l.position.x, l.position.y, l.position.z],
+							gate: railIndex
+						});
+						var max = _([l.position.x, l.position.y, l.position.z]).max();
+						if (max > gOPCMaxPointValue) {
+							gOPCMaxPointValue = max;
+						}
+						scene.add(l);
+						//scene.add(h);
+					}
+					startU += strip.total;
+				}
+				*/
 			}
 			
 			$('form input[type="range"]').on('change', function() {
@@ -676,20 +856,43 @@
 				updateLayout();
 			});
 			
-			$('#generate-opc-layout').on('click', function() {
-				showOPC(generateOPCLayout());
+			$('#show-opc-layout').on('click', function() {
+				showOPC(showOPCLayout());
 			});
 			
 			$('#opc-close-button').on('click', function() {
 				$('#opc-modal').hide();
 			});
 			
+			if (gSettings.useDeferredRenderer) {
+				$('#switch-renderers')
+					.text('Reload with WebGL Renderer')
+					.on('click', function() {
+						gSettings.useDeferredRenderer = false;
+						window.location = window.location;
+					});
+			}
+			else {
+				$('#switch-renderers')
+					.text('Reload with Deferred Renderer')
+					.on('click', function() {
+						gSettings.useDeferredRenderer = true;
+						window.location = window.location;
+					});
+			}
+			$('#reset').on('click', function() {
+				docCookies.removeItem('archway-settings');
+				gResetting = true;
+				window.location = window.location;
+			});
+
+			
 			function showOPC(code) {
 				$('#opc-code').html(code);
 				$('#opc-modal').show();
 			}
 			
-			function generateOPCLayout() {
+			function showOPCLayout() {
 				return JSON.stringify(_(gOPCPointList).map(
 					function(pt) { 
 						return { 
