@@ -298,11 +298,21 @@
 			
 			var archMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 });
 			var buildingMaterial = new THREE.MeshLambertMaterial({ color: 0x999999 });
+			var weaveMaterial = new THREE.MeshPhongMaterial({
+				// light
+				specular: '#ffffff',
+				// intermediate
+				color: '#222322',
+				// dark
+				emissive: '#000000',
+				shininess: 100 
+			});
 
 			var ancestors = [];
 			function modifyModelMesh(parent, parentName) {
 				if (_(parent).has('children')) {
 					_(parent.children).each(function(child) {
+						console.log(child.name);
 						if (child.name == 'light-rail-gate-1') {
 							gLightRail1.group = child;
 							//console.log('gate 1 group: ', child);
@@ -325,6 +335,10 @@
 								child.material = archMaterial;
 								child.castShadow = true;
 							}
+							else if (_(ancestors).any(function(name) { return name.indexOf('double-weave') == 0; })) {
+								child.material = weaveMaterial;
+								child.castShadow = true;
+							}
 							else {
 								child.material = buildingMaterial;
 								//child.castShadow = true;
@@ -343,7 +357,7 @@
 				container = document.createElement( 'div' );
 				document.body.appendChild( container );
 
-				camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 2000 );
+				camera = new THREE.PerspectiveCamera( 30, window.innerWidth / window.innerHeight, 0.1, 2000 );
 				camera.position.set(
 					gSettings.camera.position.x,
 					gSettings.camera.position.y,
@@ -474,6 +488,7 @@
 						height: window.innerHeight,
 						scale: 1
 					});
+					//renderer.setClearColor(0x0000ff);
 				}
 
 //				renderer.setSize( window.innerWidth, window.innerHeight );
