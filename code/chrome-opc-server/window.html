@@ -123,8 +123,22 @@
 			
 			#loading-model-indicator {
 				width: 200px;
-				left:100px;
-				top:100px;
+				left:200px;
+				top:200px;
+			}
+			
+			#server-status {
+				width: 200px;
+				left:1em;
+				top:1em;
+			}
+			
+			#server-status .error {
+				color:#ffdddd;
+			}
+			
+			#opc-frames-received {
+				color:#ddd;
 			}
 			
 		</style>
@@ -170,6 +184,12 @@
 				<dt>down</dt><dd>F</dd>
 				<dt>pan/tilt</dt><dd>click+drag mouse</dd>
 			</dl>
+		</div>
+		
+		<div id="server-status" class="ui-overlay">
+			<div id="server-connected">Client Not Connected</div>
+			<p id="server-status-detail"></p>
+			<p id="opc-frames-received"></p>
 		</div>
 		
 		<div id="opc-modal">

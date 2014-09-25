@@ -1,27 +1,8 @@
-console.log(docCookies.getItem('archway-settings'));
-var gSettings = docCookies.hasItem('archway-settings') ? JSON.parse(docCookies.getItem('archway-settings')) : {
-	useDeferredRenderer: false,
-	camera: {
-		position: {
-			x: 50,
-			y: 100,
-			z: -100
-		}
-	},
-	controls: {
-		lat: 0,
-		lon: -180,
-		phi: 0,
-		theta: 0
-	}
-};
 
+var gSettings = false;
+var gModelLoaded = false;
 var gResetting = false;
-$(window).on('unload', function() {
-	if (!gResetting) {
-		docCookies.setItem('archway-settings', JSON.stringify(gSettings));
-	}
-});
+var gEventDispatcher = {};
 
 // LED strip parameters
 // strips come in pairs with a box between them
@@ -51,6 +32,7 @@ var gLightRail1 = {
 			//0.901
 			0.887
 		],
+		conduitEntryOffset: 0.521,
 		strips: [],
 		lights: []
 	}, 
@@ -73,6 +55,7 @@ var gLightRail1 = {
 			0.819,
 			0.904
 		],
+		conduitEntryOffset: 0.572,
 		strips: [],
 		lights: []
 	},
@@ -92,11 +75,7 @@ loader.load( 'models/model-wip.dae', function ( collada ) {
 	
 	modifyModelMesh(dae, 'root');
 
-	$('#loading-model-indicator').fadeOut();
-
-	init();
-	animate();
-
+	$(gEventDispatcher).trigger('modelLoaded');
 } );
 
 var archMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 });
@@ -141,6 +120,43 @@ function modifyModelMesh(parent, parentName) {
 	}
 }
 
+function logBoxLengths(rail, railIndex) {
+	var requiredCable = 0;
+	_(rail.stripPairOffsets).each(function(offset, boxIndex) {
+		var onRoofExtra = 0;
+		var dropLength = 8;
+		var topBottomSwitchIndex = 0;
+		var railSide = 'top';
+		if (railIndex == 0) {
+			onRoofExtra = 12.166;
+			topBottomSwitchIndex = 4
+		}
+		else {
+			onRoofExtra = 2;
+			topBottomSwitchIndex = 6;
+		}
+		
+		if (boxIndex >= topBottomSwitchIndex) {
+			railSide = 'bottom';
+			boxIndex -= topBottomSwitchIndex;
+			offset = offset - rail.conduitEntryOffset;
+		}
+		else {
+			railSide = 'top';
+			offset = rail.conduitEntryOffset - offset;
+		}
+		
+		var baseLength = (rail.totalLength * offset / 10);
+
+		console.log(
+			'gate ' + (railIndex + 1) + ' ' + railSide + ' box ' + (boxIndex + 1) + ' on-gate length: ' + baseLength.toPrecision(3) + 
+			', total length: ' + (baseLength + onRoofExtra + dropLength).toPrecision(3)
+		);
+		requiredCable += (baseLength + onRoofExtra + dropLength);
+	});
+	return requiredCable;
+}
+
 function init() {
 
 	container = document.createElement( 'div' );
@@ -181,7 +197,7 @@ function init() {
 
 
 	//console.log('rail objects: ', gLightRail1, gLightRail2);
-	
+	var totalCableRequired = 0;
 	_([gLightRail1, gLightRail2]).each(function(rail, railIndex) {
 		_(rail.meshes).each(function(mesh) {
 			//var sphere = new THREE.SphereGeometry(0.5, 8, 8);
@@ -201,6 +217,9 @@ function init() {
 			}));
 			
 			rail.totalLength = rail.curve.getLength();
+			
+
+			totalCableRequired += logBoxLengths(rail, railIndex);
 
 			// _(rail.curve.getPoints(50)).each(function(pt) {
 			// 	var blah = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xbbffbb }));
@@ -227,9 +246,24 @@ function init() {
 			
 			//return;
 			createLightsForRail(rail, railIndex);
+			
+			//
+			var boxGeometry = new THREE.BoxGeometry(3, 3, 3);
+			var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
+			var boxParametricPos = rail.curve.getPointAt(0);
+			boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+			scene.add(boxMesh);
+			
+			boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
+			boxParametricPos = rail.curve.getPointAt(rail.conduitEntryOffset);
+			boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+			scene.add(boxMesh);
+			//
 		});
 		
 	});
+	
+	console.log('total cable required: ' + totalCableRequired);
 	
 	console.log((gLightRail1.lights.length + gLightRail2.lights.length) + ' lights total');
 
@@ -326,12 +360,12 @@ function onWindowResize() {
 //
 
 var t = 0;
-var clock = new THREE.Clock();
+var gClock = new THREE.Clock();
 
 function animate() {
 
-	var delta = clock.getDelta();
-	var elapsed = clock.getElapsedTime();
+	var delta = gClock.getDelta();
+	var elapsed = gClock.getElapsedTime();
 	elapsed = elapsed % (Math.PI * 2);
 	
 	if ( t > 1 ) t = 0;
@@ -369,11 +403,25 @@ function animate() {
 		requestAnimationFrame( animate );
 	}
 
+	updateSettings();
+}
+
+var gLastSaveTime = 0;
+function updateSettings() {
+	var currentTime = new Date().valueOf();
+
 	gSettings.camera.position = camera.position;
 	gSettings.controls.lat = controls.lat;
 	gSettings.controls.lon = controls.lon;
 	gSettings.controls.phi = controls.phi;
 	gSettings.controls.theta = controls.theta;
+	
+	// can't find the right event to hook into "unloading" ... :(
+	// so just save a bunch. this is lame.
+	if (isChromeApp() && currentTime > (gLastSaveTime + 1000)) {
+		saveSettings();
+		gLastSaveTime = currentTime;
+	}
 }
 
 function render() {
@@ -462,11 +510,9 @@ function getInches(length, u) {
 $('#toggle-play').on('click', function() {
 	if (gAnimating) {
 		pause();
-		
 	}
 	else {
 		play();
-		$(this).text('Pause');
 	}
 });
 
@@ -546,8 +592,8 @@ function createLightsForRail(rail, railIndex) {
 
 	_(rail.stripPairOffsets).each(function(stripPairOffset) {
 
-		var boxGeometry = new THREE.BoxGeometry(1, 1, 1);
-		var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x777777 }));
+		var boxGeometry = new THREE.BoxGeometry(1, 1, 2);
+		var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0xff7700 }));
 		var boxParametricPos = rail.curve.getPointAt(stripPairOffset);
 		boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
 		scene.add(boxMesh);
@@ -672,28 +718,55 @@ $('#opc-close-button').on('click', function() {
 	$('#opc-modal').hide();
 });
 
-if (gSettings.useDeferredRenderer) {
-	$('#switch-renderers')
-		.text('Reload with WebGL Renderer')
-		.on('click', function() {
-			gSettings.useDeferredRenderer = false;
-			reloadSim();
-		});
+var handleSettingsLoaded = function() {
+	if (gSettings.useDeferredRenderer) {
+		$('#switch-renderers')
+			.text('Reload with WebGL Renderer')
+			.on('click', function() {
+				gSettings.useDeferredRenderer = false;
+				saveSettings();
+				reloadSim();
+			});
+	}
+	else {
+		$('#switch-renderers')
+			.text('Reload with Deferred Renderer')
+			.on('click', function() {
+				gSettings.useDeferredRenderer = true;
+				saveSettings();
+				reloadSim();
+			});
+	}
+	if (gModelLoaded) {
+		$(gEventDispatcher).trigger('ready');
+	}
+};
+
+if (gSettings) {
+	handleSettingsLoaded();
 }
 else {
-	$('#switch-renderers')
-		.text('Reload with Deferred Renderer')
-		.on('click', function() {
-			gSettings.useDeferredRenderer = true;
-			reloadSim();
-		});
+	$(gEventDispatcher).on('settingsLoaded', handleSettingsLoaded);
 }
+
 $('#reset').on('click', function() {
-	docCookies.removeItem('archway-settings');
+	resetSettings();
 	gResetting = true;
 	reloadSim();
 });
 
+$(gEventDispatcher).on('modelLoaded', function() {
+	gModelLoaded = true;
+	if (gSettings) {
+		$(gEventDispatcher).trigger('ready');
+	}
+});
+
+$(gEventDispatcher).on('ready', function() {
+	$('#loading-model-indicator').fadeOut();
+	init();
+	animate();
+});
 
 function showOPC(code) {
 	$('#opc-code').html(code);
@@ -712,7 +785,7 @@ function showOPCLayout() {
 }
 
 function reloadSim() {
-	if (chrome && ('runtime' in chrome)) {
+	if (isChromeApp()) {
 		chrome.runtime.reload();
 	}
 	else {
@@ -720,14 +793,70 @@ function reloadSim() {
 	}
 }
 
-if (chrome && _(chrome).has('runtime')) {
-	chrome.runtime.onMessage.addListener(function(message, sender) {
-		setPixels(message.channel, message.pixels);
-	});
+function saveSettings() {
+	if (isChromeApp()) {
+		chrome.storage.local.set({ 'archway-settings': JSON.stringify(gSettings) });
+	}
+	else {
+		localStorage.setItem('archway-settings', JSON.stringify(gSettings));
+	}
+}
+
+function loadSettings() {
+	var defaults = {
+		useDeferredRenderer: false,
+		camera: {
+			position: {
+				x: 50,
+				y: 100,
+				z: -100
+			}
+		},
+		controls: {
+			lat: 0,
+			lon: -180,
+			phi: 0,
+			theta: 0
+		}
+	};
+	if (isChromeApp()) {
+		var item = chrome.storage.local.get('archway-settings', function(result) {
+			if (_.isEmpty(result)) {
+				gSettings = defaults;
+			}
+			else {
+				gSettings = JSON.parse(result['archway-settings']);
+			}
+			$(gEventDispatcher).trigger('settingsLoaded');
+		});
+	}
+	else {
+		var item = localStorage.getItem('archway-settings');
+		if (item.length) {
+			gSettings = JSON.parse(item);
+		}
+		else {
+			gSettings = defaults;
+		}
+		$(gEventDispatcher).trigger('settingsLoaded');
+	}
+}
+
+function resetSettings() {
+	if (isChromeApp()) {
+		chrome.storage.local.remove('archway-settings');
+	}
+	else {
+		localStorage.removeItem('archway-settings');
+	}
+
+}
+
+function isChromeApp() {
+	return (chrome && ('runtime' in chrome));
 }
 
 function setPixels(channel, pixels) {
-	var railNum = 1;
 	var colorIndex = 0;
 
 	_([gLightRail1, gLightRail2]).each(function(rail) {
@@ -743,10 +872,53 @@ function setPixels(channel, pixels) {
 			}
 			colorIndex += 3;
 		});
-		railNum++;
 	});
 }
 
+function handleSuspend() {
+	if (!gResetting) {
+		saveSettings();
+	}
+}
+
+function trigger() {
+	$(gEventDispatcher).trigger.apply($(gEventDispatcher), arguments);
+}
+
+if (isChromeApp()) {
+	// doesn't seem to work. :(
+	chrome.app.window.current().onClosed.addListener(handleSuspend);
+}
+else {
+	$(window).on('unload', handleSuspend);
+}
+
+
+$(document).on('ready', function() {
+	loadSettings();
+	window.isReady = true;
+});
+
+$(gEventDispatcher).on('tcpListening', function() {
+	console.log('tcpListening', arguments);
+});
+
+$(gEventDispatcher).on('tcpAccept', function(event, info) {
+	$('#server-connected').text('Client Connected on port ' + info.port);
+});
+
+$(gEventDispatcher).on('tcpAcceptError', function(event, info) {
+	$('#server-connected').text('Client Not Connected');
+	$('#server-status-detail').addClass('error').text('Error: Result code ', info.resultCode);
+});
+
+$(gEventDispatcher).on('tcpListeningError', function() {
+	console.log('tcpListeningError', arguments);
+});
+
+$(gEventDispatcher).on('opcFrameReport', function(event, info) {
+	$('#opc-frames-received').text('Frames received: ' + info.nFrames);
+});
 
 // http://stackoverflow.com/questions/1985260/javascript-array-rotate
 Array.prototype.rotate = (function() {

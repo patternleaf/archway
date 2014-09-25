@@ -9,7 +9,7 @@
 			"scripts": ["background.js"]
 		}
 	},
-	"permissions": [ "webview", { "socket" : ["tcp-listen"] } ]
+	"permissions": [ "webview", { "socket" : ["tcp-listen"] }, "storage" ]
 	/*
 	"content_scripts": [{
 		"matches": ["*://archway.patternleaf.local/*"],
