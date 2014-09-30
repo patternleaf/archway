@@ -6,10 +6,11 @@ var gEventDispatcher = {};
 
 // LED strip parameters
 // strips come in pairs with a box between them
+// BUT for now the box need not be included as a gap between strips!
 var kStripLength = 39.5;
 var kNLightsPerStrip = 60;
 var kLEDPitch = 0.66;
-var kInterStripOffset = 2;
+var kInterStripOffset = 0;
 
 var container;
 
@@ -21,16 +22,16 @@ var gLightRail1 = {
 		curve: null,
 		totalLength: 0,
 		stripPairOffsets: [
-			// roughly .097 is one strip pair length
-			0.101,
-			0.2,
-			0.297,
-			0.394,
-			0.61,
-			0.707,
-			0.804,
+			// roughly .0945 is one strip pair length
+			0.103,
+			0.198,
+			0.292,
+			0.387,
+			0.603,
+			0.697,
+			0.792,
 			//0.901
-			0.887
+			0.886
 		],
 		conduitEntryOffset: 0.521,
 		strips: [],
@@ -42,15 +43,15 @@ var gLightRail1 = {
 		curve: null,
 		totalLength: 0,
 		stripPairOffsets: [
-			// rougly .083 is one strip pair length
-			0.096,
-			0.18,
-			0.263,
-			0.346,
-			0.429,
+			// rougly .081 is one strip pair length
+			0.098,
+			0.179,
+			0.260,
+			0.341,
+			0.421,
 			//0.512,
 			0.515,
-			0.653,
+			0.654,
 			0.736,
 			0.819,
 			0.904
@@ -146,7 +147,7 @@ function logBoxLengths(rail, railIndex) {
 			offset = rail.conduitEntryOffset - offset;
 		}
 		
-		var baseLength = (rail.totalLength * offset / 10);
+		var baseLength = (rail.totalLength * offset / 12);
 
 		console.log(
 			'gate ' + (railIndex + 1) + ' ' + railSide + ' box ' + (boxIndex + 1) + ' on-gate length: ' + baseLength.toPrecision(3) + 
@@ -220,6 +221,11 @@ function init() {
 			
 
 			totalCableRequired += logBoxLengths(rail, railIndex);
+			
+			console.log(
+				'rail ' + (railIndex + 1) + ' first box distance from bottom: ', 
+				rail.stripPairOffsets[0] * rail.totalLength / 12
+			);
 
 			// _(rail.curve.getPoints(50)).each(function(pt) {
 			// 	var blah = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xbbffbb }));
