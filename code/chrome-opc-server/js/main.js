@@ -139,7 +139,6 @@ function logBoxLengths(rail, railIndex) {
 		
 		if (boxIndex >= topBottomSwitchIndex) {
 			railSide = 'bottom';
-			boxIndex -= topBottomSwitchIndex;
 			offset = offset - rail.conduitEntryOffset;
 		}
 		else {
@@ -150,12 +149,18 @@ function logBoxLengths(rail, railIndex) {
 		var baseLength = (rail.totalLength * offset / 12);
 
 		console.log(
-			'gate ' + (railIndex + 1) + ' ' + railSide + ' box ' + (boxIndex + 1) + ' on-gate length: ' + baseLength.toPrecision(3) + 
-			', total length: ' + (baseLength + onRoofExtra + dropLength).toPrecision(3)
+			'G' + (railIndex + 1) + '-B' + boxIndex + ' on-gate length: ' + feetToFeetInches(baseLength) + 
+			', total length: ' + feetToFeetInches(baseLength + onRoofExtra + dropLength)
 		);
 		requiredCable += (baseLength + onRoofExtra + dropLength);
 	});
 	return requiredCable;
+}
+
+function feetToFeetInches(feet) {
+	var ft = Math.floor(feet);
+	var remainder = feet - ft;
+	return ft + '\'' + Math.ceil(remainder * 12) + '"';
 }
 
 function init() {
@@ -219,13 +224,14 @@ function init() {
 			
 			rail.totalLength = rail.curve.getLength();
 			
-
-			totalCableRequired += logBoxLengths(rail, railIndex);
 			
-			console.log(
-				'rail ' + (railIndex + 1) + ' first box distance from bottom: ', 
-				rail.stripPairOffsets[0] * rail.totalLength / 12
-			);
+			// uncomment to log cable requirements
+			// totalCableRequired += logBoxLengths(rail, railIndex);
+			
+			// console.log(
+			// 	'rail ' + (railIndex + 1) + ' first box distance from bottom: ',
+			// 	rail.stripPairOffsets[0] * rail.totalLength / 12
+			// );
 
 			// _(rail.curve.getPoints(50)).each(function(pt) {
 			// 	var blah = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 0xbbffbb }));
@@ -269,9 +275,9 @@ function init() {
 		
 	});
 	
-	console.log('total cable required: ' + totalCableRequired);
+	//console.log('total cable required: ' + totalCableRequired);
 	
-	console.log((gLightRail1.lights.length + gLightRail2.lights.length) + ' lights total');
+	//console.log((gLightRail1.lights.length + gLightRail2.lights.length) + ' lights total');
 
 
 	// Lights
@@ -626,9 +632,16 @@ function createLightsForRail(rail, railIndex) {
 				stripCurvePts.push(l.position.clone());
 				rail.lights.push(l);
 		
+				var address = gOPCPointList.length;
+				var stripN = Math.floor(address / 60);
+				if (stripN % 2 == 0) {
+					// if floor(i / 60) is even, the strip address is physically reversed
+					address = (stripN * 60) + (60 - (i % 60)) - 1;
+				}
 				gOPCPointList.push({ 
 					point: [l.position.x, l.position.y, l.position.z],
-					gate: railIndex
+					gate: railIndex,
+					address: address
 				});
 		
 				var max = _([l.position.x, l.position.y, l.position.z]).max();
@@ -783,8 +796,9 @@ function showOPCLayout() {
 	return JSON.stringify(_(gOPCPointList).map(
 		function(pt) { 
 			return { 
-				point: [pt.point[0] / gOPCMaxPointValue, pt.point[1] / gOPCMaxPointValue, pt.point[2] / gOPCMaxPointValue ],
-				gate: pt.gate 
+				point: [pt.point[0], pt.point[1], pt.point[2] ],
+				group: pt.gate,
+				address: pt.address
 			}; 
 		}
 	));
