@@ -60,8 +60,9 @@ var gLightRail1 = {
 		strips: [],
 		lights: []
 	},
-	gOPCPointList = [],
-	gOPCMaxPointValue = 0;
+	gPhysicallyOrderedLights = [],
+	gOPCOrderedLights = [],
+	gOPCPointList = [];
 
 var gAnimating = true;
 
@@ -176,33 +177,9 @@ function init() {
 	);
 	
 	scene = new THREE.Scene();
+	
+	scene.add(dae);
 
-	// Grid
-/*
-	var size = 120, step = 12;
-
-	var geometry = new THREE.Geometry();
-	var material = new THREE.LineBasicMaterial( { color: 0x303030 } );
-
-	for ( var i = - size; i <= size; i += step ) {
-
-		geometry.vertices.push( new THREE.Vector3( - size, - 0.04, i ) );
-		geometry.vertices.push( new THREE.Vector3(   size, - 0.04, i ) );
-
-		geometry.vertices.push( new THREE.Vector3( i, - 0.04, - size ) );
-		geometry.vertices.push( new THREE.Vector3( i, - 0.04,   size ) );
-
-	}
-
-	var line = new THREE.Line( geometry, material, THREE.LinePieces );
-	scene.add( line );
-*/
-	// Add the COLLADA
-
-	scene.add( dae );
-
-
-	//console.log('rail objects: ', gLightRail1, gLightRail2);
 	var totalCableRequired = 0;
 	_([gLightRail1, gLightRail2]).each(function(rail, railIndex) {
 		_(rail.meshes).each(function(mesh) {
@@ -260,20 +237,28 @@ function init() {
 			createLightsForRail(rail, railIndex);
 			
 			//
-			var boxGeometry = new THREE.BoxGeometry(3, 3, 3);
-			var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
-			var boxParametricPos = rail.curve.getPointAt(0);
-			boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
-			scene.add(boxMesh);
-			
-			boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
-			boxParametricPos = rail.curve.getPointAt(rail.conduitEntryOffset);
-			boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
-			scene.add(boxMesh);
+			// var boxGeometry = new THREE.BoxGeometry(3, 3, 3);
+			// var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
+			// var boxParametricPos = rail.curve.getPointAt(0);
+			// boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+			// scene.add(boxMesh);
+			//
+			// boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0x55ff55 }));
+			// boxParametricPos = rail.curve.getPointAt(rail.conduitEntryOffset);
+			// boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+			// scene.add(boxMesh);
 			//
 		});
 		
 	});
+	
+	//console.log(gPhysicallyOrderedLights.length + ' lights');
+	for (var i = 0; i < gOPCOrderedLights.length; i++) {
+		if (typeof gPhysicallyOrderedLights[gOPCOrderedLights[i].opcAddress] != 'undefined') {
+			console.log('opc address ' + gOPCOrderedLights[i].opcAddress + ' already in use, physical light ' + i);
+		}
+		gPhysicallyOrderedLights[gOPCOrderedLights[i].opcAddress] = gOPCOrderedLights[i];
+	}
 	
 	//console.log('total cable required: ' + totalCableRequired);
 	
@@ -542,63 +527,7 @@ function play() {
 		gAnimating = true;
 	}
 }
-/*
-function updateNumericValues() {
-	$('#gate-1-top-start-number').val(
-		getInches(gLightRail1.totalLength, $('#gate-1-top-start-slider').val()).toFixed(1)
-	);
-	$('#gate-1-bottom-start-number').val(
-		getInches(gLightRail1.totalLength, $('#gate-1-bottom-start-slider').val()).toFixed(1)
-	);
-	$('#gate-2-top-start-number').val(
-		getInches(gLightRail2.totalLength, $('#gate-2-top-start-slider').val()).toFixed(1)
-	);
-	$('#gate-2-bottom-start-number').val(
-		getInches(gLightRail2.totalLength, $('#gate-2-bottom-start-slider').val()).toFixed(1)
-	);
-}
 
-function updateLayout() {
-	gLightRail1.startOffsets.top = parseFloat($('#gate-1-top-start-slider').val());
-	gLightRail1.startOffsets.bottom = parseFloat($('#gate-1-bottom-start-slider').val());
-
-	gLightRail2.startOffsets.top = parseFloat($('#gate-2-top-start-slider').val());
-	gLightRail2.startOffsets.bottom = parseFloat($('#gate-2-bottom-start-slider').val());
-	updateLightPositions();
-}
-
-function updateLightPositions() {
-	gOPCPointList = [];
-	_([gLightRail1, gLightRail2]).each(function(rail, railNum) {
-		var lightIndex = 0;
-		_(['top', 'bottom']).each(function(side) {
-			var nStrips = rail.nStrips[side];
-			var startU = rail.startOffsets[side];
-			var strip, light;
-			var p, max;
-		
-			for (var i = 0; i < nStrips; i++) {
-				//console.log('gate ' + (railNum + 1) + ', ' + side + ' strip ' + (i + 1), startU);
-				strip = getLightStrip(rail.totalLength, startU);
-				for (var j = 0; j < strip.points.length; j++) {
-					p = rail.curve.getPointAt(strip.points[j]);
-					light = rail.lights[lightIndex];
-					light.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);
-					gOPCPointList.push({ point: [light.position.x, light.position.y, light.position.z] });
-					max = _([light.position.x, light.position.y, light.position.z]).max();
-					if (max > gOPCMaxPointValue) {
-						gOPCMaxPointValue = max;
-					}
-
-					lightIndex++;
-				}
-				
-				startU += strip.total;
-			}
-		});
-	});
-}
-*/
 function createLightsForRail(rail, railIndex) {
 	var color = new THREE.Color(0x7788ff);
 
@@ -612,43 +541,50 @@ function createLightsForRail(rail, railIndex) {
 	
 		var pair = getStripPair(stripPairOffset, rail.totalLength);
 	
-		_(['up', 'down']).each(function(stripName) {
+		_(['down', 'up']).each(function(stripName) {
 			var stripCurvePts = [];
 			for (var i = 0; i < pair.points[stripName].length; i++) {
-				var l;
+				var physicalAddress = gOPCPointList.length;
+				var opcAddress = physicalAddress;
+				var stripN = Math.floor(physicalAddress / 60);
+				if (stripN % 2 == 0) {
+					// if floor(i / 60) is even, the strip address is physically reversed
+					opcAddress = (stripN * 60) + (60 - (i % 60)) - 1;
+				}
+				
+				var sceneLight;
+				var sceneLightLabel = null;
 				if (gSettings.useDeferredRenderer) {
-					l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
+					sceneLight = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
+					sceneLight.opcAddress = opcAddress;
 				}
 				else {
-					l = new THREE.Mesh(
+					sceneLight = new THREE.Mesh(
 						new THREE.SphereGeometry(0.5, 4, 4), 
 						new THREE.MeshBasicMaterial({ color: color.offsetHSL(.001, 0, 0) })
 					);
+					sceneLight.opcAddress = opcAddress;
+					//console.log(gOPCPointList.length + ' => ' + sceneLight.opcAddress);
 				}
 			
 				var ledPoint = rail.curve.getPointAt(pair.points[stripName][i]);
 		
-				l.position = new THREE.Vector3(0, ledPoint.y, ledPoint.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
-				stripCurvePts.push(l.position.clone());
-				rail.lights.push(l);
+				sceneLight.position = new THREE.Vector3(0, ledPoint.y, ledPoint.x).add(rail.group.position);
+				stripCurvePts.push(sceneLight.position.clone());
+				rail.lights.push(sceneLight);
+				gOPCOrderedLights.push(sceneLight);
 		
-				var address = gOPCPointList.length;
-				var stripN = Math.floor(address / 60);
-				if (stripN % 2 == 0) {
-					// if floor(i / 60) is even, the strip address is physically reversed
-					address = (stripN * 60) + (60 - (i % 60)) - 1;
-				}
 				gOPCPointList.push({ 
-					point: [l.position.x, l.position.y, l.position.z],
+					point: [sceneLight.position.x, sceneLight.position.y, sceneLight.position.z],
 					gate: railIndex,
-					address: address
+					//address: opcAddress
+					address: gOPCPointList.length
 				});
-		
-				var max = _([l.position.x, l.position.y, l.position.z]).max();
-				if (max > gOPCMaxPointValue) {
-					gOPCMaxPointValue = max;
-				}
-				scene.add(l);
+
+				scene.add(sceneLight);
+				// if (sceneLightLabel) {
+				// 	scene.add(sceneLightLabel);
+				// }
 			}
 		
 		
@@ -862,6 +798,17 @@ function loadSettings() {
 	}
 }
 
+function physicalAddressToOPCAddress(physicalAddress) {
+	var opcAddress = 0;
+	var stripN = Math.floor(physicalAddress / 60);
+	var lightIndexOnStrip = phyiscalAddress - (stripN * 60);
+	if (stripN % 2 == 0) {
+		// if floor(i / 60) is even, the strip address is physically reversed
+		opcAddress = (stripN * 60) + (60 - (lightIndexOnStrip % 60)) - 1;
+	}
+	return opcAddress;
+}
+
 function resetSettings() {
 	if (isChromeApp()) {
 		chrome.storage.local.remove('archway-settings');
@@ -876,23 +823,68 @@ function isChromeApp() {
 	return (chrome && ('runtime' in chrome));
 }
 
+// @param pixels Uint8Array of bytes in OPC order.
+// (eg, pixel 0 is the 60th pixel up from the lower left corner).
+function setOPCPixels(channel, pixels) {
+	for (var i = 0; i < gOPCOrderedLights.length; i++) {
+		var light = gOPCOrderedLights[i];
+		var baseAddress = (i * 3);
+		if (gSettings.useDeferredRenderer) {
+			light.color.setRGB(
+				pixels[baseAddress + 0] / 255, 
+				pixels[baseAddress + 1] / 255, 
+				pixels[baseAddress + 2] / 255
+			);
+		}
+		else {
+			light.material.color.setRGB(
+				pixels[baseAddress + 0] / 255, 
+				pixels[baseAddress + 1] / 255, 
+				pixels[baseAddress + 2] / 255
+			);
+		}
+	}
+}
+// @param pixels Uint8Array of bytes in physical order.
+// (eg, pixel 0 is at the lower-left corner)
 function setPixels(channel, pixels) {
-	var colorIndex = 0;
+	for (var i = 0; i < gPhysicallyOrderedLights.length; i++) {
+		var light = gPhysicallyOrderedLights[i];
+		var baseAddress = (light.opcAddress * 3);
+		if (gSettings.useDeferredRenderer) {
+			light.color.setRGB(
+				pixels[baseAddress + 0] / 255, 
+				pixels[baseAddress + 1] / 255, 
+				pixels[baseAddress + 2] / 255
+			);
+		}
+		else {
+			light.material.color.setRGB(
+				pixels[baseAddress + 0] / 255, 
+				pixels[baseAddress + 1] / 255, 
+				pixels[baseAddress + 2] / 255
+			);
+		}
+	}
+}
 
-	_([gLightRail1, gLightRail2]).each(function(rail) {
-		var nLights = rail.lights.length;
-		_(rail.lights).each(function(light, index) {
-			if (colorIndex < pixels.length - 1) {
-				if (gSettings.useDeferredRenderer) {
-					light.color.setRGB(pixels[colorIndex + 0], pixels[colorIndex + 1], pixels[colorIndex + 2]);
-				}
-				else {
-					light.material.color.setRGB(pixels[colorIndex + 0], pixels[colorIndex + 1], pixels[colorIndex + 2]);
-				}
-			}
-			colorIndex += 3;
-		});
-	});
+function setOPCPixel(address, color) {
+	if (gSettings.useDeferredRenderer) {
+		gOPCOrderedLights[address].color.setRGB(color.r, color.g, color.b);
+	}
+	else {
+		gOPCOrderedLights[address].material.color.setRGB(color.r, color.g, color.b);	
+	}
+}
+
+function setPixel(address, color) {
+	if (gSettings.useDeferredRenderer) {
+		gPhysicallyOrderedLights[address].color.setRGB(color.r, color.g, color.b);
+	}
+	else {
+		gPhysicallyOrderedLights[address].material.color.setRGB(color.r, color.g, color.b);	
+	}
+		
 }
 
 function handleSuspend() {
