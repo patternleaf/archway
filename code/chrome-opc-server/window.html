@@ -4,170 +4,12 @@
 		<title>three.js webgl - collada</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				font-family: Monospace;
-				background-color: #000000;
-				margin: 0px;
-				overflow: hidden;
-			}
-
-			#info {
-				color: #fff;
-				position: absolute;
-				top: 10px;
-				width: 100%;
-				text-align: center;
-				z-index: 100;
-				display:block;
-
-			}
-
-			a { color: skyblue }
-			
-			.ui-overlay {
-				position:absolute;
-				color:#ddd;
-				font-size:12px;
-				font-family:Helvetica, sans-serif;
-				width: 250px;
-				background:rgba(255, 255, 255, 0.2);
-				border-radius:0.5em;
-				padding:0.5em;
-			}
-			
-			.ui-overlay.dark {
-				
-			}
-			
-			#legend {
-				right:1em;
-				bottom:1em;
-				width:200px;
-			}
-			
-			#legend dl {
-				margin:0;
-			}
-			#legend dd, #legend dt {
-				float:left;
-				min-width:80px;
-				display:block;
-				margin:0;
-			}
-			#legend dt {
-				clear:left;
-			}
-			
-			#controls {
-				left:1em;
-				bottom:1em;
-			}
-			
-			#controls h1 {
-				margin-top:1.5em;
-				font-size:14px;
-
-			}
-			#controls h1:first-child {
-				margin-top:0;
-			}
-			#controls h2 {
-				font-size:12px;
-				margin:0.25em;
-			}
-			#controls input[type=number] {
-				width:50px;
-			}
-			#controls .n-strips {
-				color:#aaa;
-			}
-			
-			#controls button {
-				display:block;
-			}
-			
-			#opc-modal {
-				display:none;
-				position:absolute;
-				left:2em;
-				right:2em;
-				top:2em;
-				bottom:2em;
-				background-color:rgba(0, 0, 0, 0.5);
-				padding:2em;
-			}
-			
-			#opc-code {
-				background-color:rgba(200, 200, 200, 1);
-				color:#333;
-				font-family:courier, monospace;
-				white-space:pre;
-				margin-top:2em;
-				width:100%;
-				height:100%;
-			}
-			
-			#opc-close-button {
-				color:#fff;
-				position:absolute;
-				right:1em;
-				top:1em;
-				font-size:2em;
-				cursor:pointer;
-			}
-			
-			#opc-close-button:hover {
-				color:#8f8;
-			}
-			
-			#loading-model-indicator {
-				width: 200px;
-				left:200px;
-				top:200px;
-			}
-			
-			#server-status {
-				width: 200px;
-				left:1em;
-				top:1em;
-			}
-			
-			#server-status .error {
-				color:#ffdddd;
-			}
-			
-			#opc-frames-received {
-				color:#ddd;
-			}
-			
-		</style>
+		<link rel="stylesheet" href="/styles/main.css" type="text/css" media="screen" charset="utf-8">
 	</head>
 	<body>
 		
 		<div id="controls" class="ui-overlay">
 			<button id="toggle-play">Pause</button>
-			<!--
-			<form>
-				<h1>Gate 1</h1>
-				<h2>Start - Top <span class="n-strips" id="gate-1-top-n-strips"></span></h2>
-				<input type="range" id="gate-1-top-start-slider" min="0" max="1" value="0.14" step="0.0001">
-				<input type="number" id="gate-1-top-start-number" step="0.1"> in
-				
-				<h2>Start - Bottom <span class="n-strips" id="gate-1-bottom-n-strips"></span></h2>
-				<input type="range" id="gate-1-bottom-start-slider" min="0" max="1" value="0.65" step="0.0001">
-				<input type="number" id="gate-1-bottom-start-number" step="0.1"> in
-				
-				<h1>Gate 2</h1>
-				<h2>Start - Top <span class="n-strips" id="gate-2-top-n-strips"></span></h2>
-				<input type="range" id="gate-2-top-start-slider" min="0" max="1" value="0.13" step="0.0001">
-				<input type="number" id="gate-2-top-start-number" step="0.1"> in
-				
-				<h2>Start - Bottom <span class="n-strips" id="gate-2-bottom-n-strips"></span></h2>
-				<input type="range" id="gate-2-bottom-start-slider" min="0" max="1" value="0.7" step="0.0001">
-				<input type="number" id="gate-2-bottom-start-number" step="0.1"> in
-			</form>
-			-->
 			<button id="reset">Reset</button>
 			<button id="switch-renderers"></button>
 			<hr>
@@ -189,7 +31,11 @@
 		<div id="server-status" class="ui-overlay">
 			<div id="server-connected">Client Not Connected</div>
 			<p id="server-status-detail"></p>
-			<p id="opc-frames-received"></p>
+			<div class="client-controls" style="display:none;">
+				<p id="opc-frames-received"></p>
+				<input type="range" min="0" max="1" value="0" step="0.1" id="mixer-0-level">
+				<button id="scroll-test-blip">Scroll Blip</button>
+			</div>
 		</div>
 		
 		<div id="opc-modal">

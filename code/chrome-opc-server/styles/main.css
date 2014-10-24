@@ -1,54 +1,135 @@
 body {
-  font-family: Arial, sans-serif;
-  background: #333;
-  color: white;
+	font-family: Monospace;
+	background-color: #000000;
+	margin: 0px;
+	overflow: hidden;
 }
 
-.hide-when-not-connected {
-  display: none;
+#info {
+	color: #fff;
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+
 }
 
-.connected .hide-when-not-connected {
-  display: block;
+a { color: skyblue }
+
+.ui-overlay {
+	position:absolute;
+	color:#ddd;
+	font-size:12px;
+	font-family:Helvetica, sans-serif;
+	width: 250px;
+	background:rgba(255, 255, 255, 0.2);
+	border-radius:0.5em;
+	padding:0.5em;
 }
 
-
-.connected .hide-when-not-connected p {
-  color: #33ff44
+.ui-overlay.dark {
+	
 }
 
-.connected .hide-when-connected {
-  display: none;
+#legend {
+	right:1em;
+	bottom:1em;
+	width:200px;
 }
 
-input[type="number"] {
-  width: 5em;
+#legend dl {
+	margin:0;
+}
+#legend dd, #legend dt {
+	float:left;
+	min-width:80px;
+	display:block;
+	margin:0;
+}
+#legend dt {
+	clear:left;
 }
 
-button {
-  cursor: pointer;
-  margin-left: 20px;
+#controls {
+	left:1em;
+	bottom:1em;
 }
 
-#serverStop {
-  background-color: #D14836;
-  background-image: -webkit-linear-gradient(top,#DD4B39,#D14836);
-  border: 1px solid transparent;
-  color: white;
-  border-radius: 2px;
+#controls h1 {
+	margin-top:1.5em;
+	font-size:14px;
+
+}
+#controls h1:first-child {
+	margin-top:0;
+}
+#controls h2 {
+	font-size:12px;
+	margin:0.25em;
+}
+#controls input[type=number] {
+	width:50px;
+}
+#controls .n-strips {
+	color:#aaa;
 }
 
-#serverStop:hover {
-  background-color: #C53727;
-  background-image: -webkit-linear-gradient(top, #DD4B39, #C53727);
-  border: 1px solid #B0281A;
+#controls button {
+	display:block;
 }
-#serverlog {
-  background: #444;
-  color: #999;
-	width: 480px;
-	height: 180px;
-	border: 1px solid #666;
-	padding: 3px;
-	overflow: auto;
+
+#opc-modal {
+	display:none;
+	position:absolute;
+	left:2em;
+	right:2em;
+	top:2em;
+	bottom:2em;
+	background-color:rgba(0, 0, 0, 0.5);
+	padding:2em;
+}
+
+#opc-code {
+	background-color:rgba(200, 200, 200, 1);
+	color:#333;
+	font-family:courier, monospace;
+	white-space:pre;
+	margin-top:2em;
+	width:100%;
+	height:100%;
+}
+
+#opc-close-button {
+	color:#fff;
+	position:absolute;
+	right:1em;
+	top:1em;
+	font-size:2em;
+	cursor:pointer;
+}
+
+#opc-close-button:hover {
+	color:#8f8;
+}
+
+#loading-model-indicator {
+	width: 200px;
+	left:200px;
+	top:200px;
+}
+
+#server-status {
+	width: 200px;
+	left:1em;
+	top:1em;
+}
+
+#server-status .error {
+	color:#ffdddd;
+}
+
+#opc-frames-received {
+	color:#ddd;
 }
