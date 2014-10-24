@@ -1,12 +1,8 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-	this.resource('archway', { path: '/' });
+	this.resource('scene', { path: '/scene/:scene_id' }, function() {
+		this.route('new');
+		this.route('load');
+	});
 });
-
-
-App.IndexRoute = Ember.Route.extend({
-	model: function() {
-		return this.store.find('scene', 1);
-	}
-})

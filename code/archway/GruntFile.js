@@ -125,6 +125,7 @@ module.exports = function(grunt) {
 				'src/templates/**/*.hbars',
 				'src/index.html', 
 				'src/less/**/*.less',
+				'src/less/**/*.css',
 				'src/chrome-app-stuff/**/*.js', 
 				'src/chrome-app-stuff/manifest.json'
 			],

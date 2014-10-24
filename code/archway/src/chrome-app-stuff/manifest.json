@@ -12,6 +12,7 @@
 	"permissions": [ 
 		"webview", 
 		"storage",
+		{ "fileSystem": ["write", "retainEntries", "directory"] }, 
 		{ "socket" : ["tcp-listen"] },
 		"http://localhost/"
 	]

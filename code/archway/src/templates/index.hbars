@@ -6,8 +6,8 @@
 				<div class="inner">
 					<h3 class="masthead-brand">Archway v{{ version }}</h3>
 					<ul class="nav masthead-nav">
-						<li><a class="button" {{action 'loadModel3d'}}>Load Model</a></li>
-						<li><a class="button" {{action 'loadOPCLayout'}}>Load OPC Layout</a></li>
+						<li><a class="button" {{action 'selectModel3dFile'}}>Load Model</a></li>
+						<li><a class="button" {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
 						<li><a href="#">Options</a></li>
 						<li><a href="#">About</a></li>
 					</ul>
@@ -16,7 +16,7 @@
 
 			<div class="inner cover">
 				<div id="scene-container">
-		
+					{{ outlet "scene" }}
 				</div>
 	
 				<p class="lead">Archway will display your OPC layout and a model. Get started:</p>
@@ -28,9 +28,6 @@
 
 			<footer class="mastfoot">
 				<div class="inner">
-					<!--
-					<p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-					-->
 				</div>
 			</footer>
 
