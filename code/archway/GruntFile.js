@@ -1,6 +1,7 @@
 module.exports = function(grunt) {
 	var appJSFiles = [
-		'src/js/*.js',
+		'src/js/app.js',
+		'src/js/models/*.js',
 		'src/js/controllers/*.js',
 		'src/js/views/*.js'
 	];
@@ -35,11 +36,10 @@ module.exports = function(grunt) {
 		emberTemplates: {
 			develop: {
 				options: {
-					templateFileExtensions: /\.hbars/,
 					templateBasePath: 'src/templates/'
 				},
 				files: {
-					'build/app/templates/templates.js': ['src/templates/*.hbars']
+					'build/app/templates/templates.js': ['src/templates/**/*.hbs']
 				}
 			}
 		},
@@ -122,7 +122,7 @@ module.exports = function(grunt) {
 		watch: {
 			files: [
 				'src/js/**/*.js', 
-				'src/templates/**/*.hbars',
+				'src/templates/**/*.hbs',
 				'src/index.html', 
 				'src/less/**/*.less',
 				'src/less/**/*.css',

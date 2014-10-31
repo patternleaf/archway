@@ -1,5 +1,5 @@
 App.Scene = DS.Model.extend({
-	model3d: DS.hasOne('model3d'),
-	opcLayout: DS.hasOne('opcLayout'),
-	view: DS.attr()
+	model3d: DS.belongsTo('model3d'),
+	opcLayout: DS.belongsTo('opcLayout'),
+	sceneView: DS.belongsTo('sceneView')
 });

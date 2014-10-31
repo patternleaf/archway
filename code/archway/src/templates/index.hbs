@@ -1,0 +1,13 @@
+
+
+			<div class="inner cover">
+				<div id="scene-container">
+					{{ outlet "scene" }}
+				</div>
+	
+				<p class="lead">Archway will display your OPC layout and a model. Get started:</p>
+				<p class="lead">
+					<a {{action 'loadModel3d'}}>Load Model</a> | 
+					<a {{action 'loadOPCLayout'}}>Load OPC Layout</a>
+				</p>
+			</div>
