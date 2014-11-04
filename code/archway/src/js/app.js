@@ -1,13 +1,10 @@
-App = Ember.Application.create();
+App = Ember.Application.create({
+	LOG_TRANSITIONS: true
+});
 
 App.Router.map(function() {
-	this.route('index', { path: '/' });
-	
-	this.resource('scene', { path: '/scene/:scene_id' }, function() {
-		this.route('new');
-		this.route('load');
-	});
+	// implicit application and index routes ...
+	this.route('scene', { path: '/scene' });
 });
 
 
-App.IndexRoute = Ember.Route.extend({});

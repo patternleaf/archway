@@ -13,13 +13,19 @@ function trigger() {
 
 function publishOPCFrame(channel, view) {
 	if (gSimWindow && gSimWindow.contentWindow && gSimWindow.contentWindow.isReady) {
-		gSimWindow.contentWindow.setPixels(channel, view);
+		gSimWindow.contentWindow.setOPCPixels(channel, view);
+	}
+}
+
+function debug() {
+	if (0) {
+		console.log.apply(console, arguments);
 	}
 }
 
 chrome.app.runtime.onLaunched.addListener(function() {
 
-	chrome.app.window.create('index.html', {
+	chrome.app.window.create('window.html', {
 		'bounds': {
 			'width': 1000,
 			'height': 700
@@ -59,46 +65,86 @@ chrome.app.runtime.onLaunched.addListener(function() {
 		return ((val & 0xFF) << 8) | ((val >> 8) & 0xFF);
 	}
 	
+	// The opc frame being constructed currently.
 	var gOPCFrame = { 
 		channel: 0, 
 		command: 0, 
 		pixels: null,
 		pixelsView: null,
-		pixelsReceived: -1
+		pixelBytesReceived: -1
 	 };
 	var onReceive = function(info) {
 		if (info.socketId == gClientSocketId) {
 			
-			var receivedPayloadView, framePayloadLength;
+			var incomingPixelsView,
+				incomingPixelsViewSize,
+				opcFrameByteLength, 
+				bytesInPacket = info.data.byteLength,
+				packetBytesConsumed = 0;
 			
-			if (gOPCFrame.pixelsReceived == -1) {
-				gOPCFrame.channel = new Uint8Array(info.data, 0, 1)[0];
-				gOPCFrame.command = new Uint8Array(info.data, 1, 1)[0];
-				framePayloadLength = swap16(new Uint16Array(info.data, 2, 1)[0]);
-				gOPCFrame.pixels = new ArrayBuffer(framePayloadLength);
-				gOPCFrame.pixelsView = new Uint8Array(gOPCFrame.pixels);
-				gOPCFrame.pixelsReceived = 0;
+			debug('--> new packet received containing ' + bytesInPacket + ' bytes');
+			
+			while (packetBytesConsumed < bytesInPacket) {
 				
-				// start of a frame. offset data reading by the header size (4)
-				receivedPayloadView = new Uint8Array(info.data, 4, info.data.byteLength - 4);
+				if (gOPCFrame.pixelBytesReceived == -1) {
+					// Our frame is reset. Assume the next bytes of data in the stream
+					// are an OPC header.
+					
+					// TODO: seek for something that looks like an opc header? for the case
+					// where we start getting non-packet-aligned commands in the middle of a stream
+					// and are out of sync.
+					
+					gOPCFrame.channel = new Uint8Array(info.data, packetBytesConsumed, 1)[0];
+					gOPCFrame.command = new Uint8Array(info.data, packetBytesConsumed + 1, 1)[0];
+					opcFrameByteLength = swap16(new Uint16Array(info.data, packetBytesConsumed + 2, 1)[0]);
+					gOPCFrame.pixels = new ArrayBuffer(opcFrameByteLength);
+					gOPCFrame.pixelsView = new Uint8Array(gOPCFrame.pixels);
+					gOPCFrame.pixelBytesReceived = 0;
+
+					// account for 4-byte header in packet.
+					packetBytesConsumed += 4;
+					
+					debug('    new frame begin: ' + 
+						opcFrameByteLength + ' bytes in frame (' + (opcFrameByteLength / 3) + ' pixels). ' + 
+						packetBytesConsumed + ' bytes of packet consumed.');
+				}
+				else {
+					// Continuation in this packet of an already-existing frame.
+					debug('    continuing previous frame. ' + 
+						(gOPCFrame.pixelBytesReceived / 3) + ' pixels in buffer, ' + 
+						(gOPCFrame.pixelsView.length - gOPCFrame.pixelBytesReceived) + ' bytes still needed (' + 
+						((gOPCFrame.pixelsView.length - gOPCFrame.pixelBytesReceived) / 3) + ' pixels)');
+				}
+
+				// # of bytes to read is the smaller of: the rest of the packet, or the number of bytes needed to complete a frame.
+				incomingPixelsViewSize = Math.min(
+					bytesInPacket - packetBytesConsumed, 
+					gOPCFrame.pixelsView.length - gOPCFrame.pixelBytesReceived
+				);
+
+				// This is the view we will read from for this pass.
+				incomingPixelsView = new Uint8Array(info.data, packetBytesConsumed, incomingPixelsViewSize);
+
+				debug('copying ' + incomingPixelsViewSize + ' bytes into frame buffer ... ');
+				for (var j = 0; j < incomingPixelsViewSize; j++) {
+					gOPCFrame.pixelsView[gOPCFrame.pixelBytesReceived] = incomingPixelsView[j];
+					gOPCFrame.pixelBytesReceived++;
+					packetBytesConsumed++;
+				}
+				debug('... done. ' + packetBytesConsumed + ' packet bytes consumed, ' + 
+					(gOPCFrame.pixelBytesReceived / 3) + ' pixels in framebuffer'
+				);
+
+				if (gOPCFrame.pixelBytesReceived == gOPCFrame.pixelsView.length) {
+					// frame is complete. send it on.
+					handleOPCFrame(gOPCFrame);
+					debug('[[ complete frame received. resetting framebuffer. ]]');
+					gOPCFrame.pixelBytesReceived = -1;
+					gOPCFrame.pixels = null;
+					gOPCFrame.pixelsView = null;
+				}
 			}
-			else {
-				// contiuation of previous frame. don't offset reads.
-				receivedPayloadView = new Uint8Array(info.data);
-			}
-			
-			for (var j = 0; j < receivedPayloadView.length; j++) {
-				gOPCFrame.pixelsView[gOPCFrame.pixelsReceived++] = receivedPayloadView[j];
-			}
-			
-			if (gOPCFrame.pixelsReceived == gOPCFrame.pixelsView.length) {
-				// frame is complete. send it on.
-				handleOPCFrame(gOPCFrame);
-				gOPCFrame.pixelsReceived = -1;
-				gOPCFrame.pixels = null;
-				gOPCFrame.pixelsView = null;
-			}
-			
+			debug('<-- packet exhausted');
 		}
 	};
 	

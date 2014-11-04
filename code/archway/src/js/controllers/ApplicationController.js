@@ -1,33 +1,37 @@
-App.ApplicationController = Ember.Controller.extend({
+App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 	version: 0.1,
-	model3d: null,
-	opcLayout: null,
+	scene: null,
+	
+	init: function() {
+		this._super();
+		this.set('scene', this.store.createRecord('scene'), {});
+	},
 	
 	actions: {
 		selectModel3dFile: function() {
 			
 		},
 		selectOPCLayoutFile: function() {
-			var accepts = [{
+			var fileFilter = [{
 				mimeTypes: ['text/*'],
 				extensions: ['json']
 			}];
-			var that = this;
-			chrome.fileSystem.chooseEntry({ type: 'openFile', accepts: accepts }, function(entry) {
+			var controller = this;
+			chrome.fileSystem.chooseEntry({ type: 'openFile', accepts: fileFilter }, function(entry) {
 				if (entry) {
-					that.loadLayout(entry);
+					controller.loadLayout(entry);
 				}
 			});
 		}
 	},
-		
-	loadModel: function() {
+
+
+	loadModel3d: function() {
 		
 	},
 	
 	loadLayout: function(entry) {
-		var appController = this;
-		window.appController = this;
+		var controller = this;
 		
 		entry.file(function(file) {
 			var reader = new FileReader();
@@ -44,37 +48,25 @@ App.ApplicationController = Ember.Controller.extend({
 					alert('Could not parse OPC layout from ' + file.name + '!');
 				}
 				if (layoutData) {
-					var layout = appController.store.createRecord('opcLayout', {
+					var layout = controller.store.createRecord('opcLayout', {
 						name: file.name
 					});
-					console.log('layout pixels: ', layout.get('pixels'));
 					for (var i = 0; i < layoutData.length; i++) {
-						var pixel = appController.store.createRecord('pixel', {
+						var pixel = controller.store.createRecord('pixel', {
 							x: layoutData[i].point.x,
 							y: layoutData[i].point.y,
 							z: layoutData[i].point.z,
 							group: layoutData[i].group,
 							address: layoutData[i].address,
 						});
-						appController.store.push(pixel);
 						layout.get('pixels').pushObject(pixel);
 					}
-					appController.store.push(layout);
+					controller.set('scene.opcLayout', layout);
+					controller.triggerAction({
+						action: 'updateScene'
+					});
 				}
 			};
-			reader.readAsText(file);
-		});
-	},
-	
-	readFile: function(file, callback) {
-		fileEntry.file(function(file) {
-			var reader = new FileReader();
-
-			reader.onerror = errorHandler;
-			reader.onload = function(e) {
-				callback(e.target.result);
-			};
-
 			reader.readAsText(file);
 		});
 	}

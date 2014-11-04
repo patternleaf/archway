@@ -6,7 +6,13 @@
 					<h3 class="masthead-brand">Archway v{{ version }}</h3>
 					<ul class="nav masthead-nav">
 						<li><a class="button" {{action 'selectModel3dFile'}}>Load Model</a></li>
-						<li><a class="button" {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
+						<li>
+							{{#if opcLayout}}
+							<a class="button" {{action 'selectOPCLayoutFile'}}>{{opcLayout.name}}</a>
+							{{else}}
+							<a class="button" {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a>
+							{{/if}}
+						</li>
 						<li><a href="#">Options</a></li>
 						<li><a href="#">About</a></li>
 					</ul>

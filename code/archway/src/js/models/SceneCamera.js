@@ -1,4 +1,4 @@
-App.SceneView = DS.Model.extend({
+App.SceneCamera = DS.Model.extend({
 	x: DS.attr('number'),
 	y: DS.attr('number'),
 	z: DS.attr('number'),
