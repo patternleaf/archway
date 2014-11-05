@@ -1,10 +1,14 @@
 <div class="scene-view">
+	<div id="three-view-container"></div>
 	<div id="controls" class="ui-overlay">
-		<button id="toggle-play">Pause</button>
+		{{#if isAnimating }}
+			<button id="toggle-play" {{action 'pauseAnimation'}}>Pause</button>
+		{{else}}
+			<button id="toggle-play" {{action 'playAnimation'}}>Play</button>
+		{{/if}}
 		<button id="reset">Reset</button>
 		<button id="switch-renderers"></button>
 		<hr>
-		<button id="show-opc-layout">Show OPC Layout</button>
 	</div>
 	
 	<div id="legend" class="ui-overlay">

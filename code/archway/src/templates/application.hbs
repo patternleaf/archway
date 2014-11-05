@@ -1,31 +1,47 @@
 	<div class="site-wrapper-inner">
-		<div class="cover-container">
+		<div class="chrome-container">
 
-			<header class="masthead clearfix">
-				<div class="inner">
-					<h3 class="masthead-brand">Archway v{{ version }}</h3>
-					<ul class="nav masthead-nav">
-						<li><a class="button" {{action 'selectModel3dFile'}}>Load Model</a></li>
-						<li>
+			<header>
+				<ul class="nav masthead-nav">
+					<li class="masthead-brand">
+						<span class="item">Archway v{{ version }}</span>
+						<ul class="submenu">
+							<li>{{#link-to 'about'}}About{{/link-to}}</li>
+							<li><a href="http://github.com/patternleaf/archway">Archway on GitHub</a></li>
+						</ul>
+					</li>
+					<li>
+						<span class="item">Model</span>
+						<ul class="submenu">
+							<li><a href="#" {{action 'selectModel3dFile'}}>Load Model</a></li>
+						</ul>
+					</li>
+					<li>
+						<span class="item">OPC</span>
+						<ul class="submenu">
 							{{#if opcLayout}}
-							<a class="button" {{action 'selectOPCLayoutFile'}}>{{opcLayout.name}}</a>
-							{{else}}
-							<a class="button" {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a>
+							<li class="disabled">Currently loaded: {{opcLayout.name}}</li>
 							{{/if}}
-						</li>
-						<li><a href="#">Options</a></li>
-						<li><a href="#">About</a></li>
-					</ul>
-				</div>
+							<li><a {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
+						</ul>
+					</li>
+					<li>
+						<span class="item">View</span>
+						<ul class="submenu">
+							<li>Show Client</li>
+							<li>Show Camera</li>
+							<li>Show Controls</li>
+						</ul>
+					</li>
+					<li><span class="item">Options</span></li>
+				</ul>
 			</header>
 
 {{outlet}}
 
-			<footer class="mastfoot">
-				<div class="inner">
-				</div>
+			<footer>
+				
 			</footer>
-
 
 		</div>
 	</div>

@@ -2,9 +2,11 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 	version: 0.1,
 	scene: null,
 	
+	
+	
 	init: function() {
 		this._super();
-		this.set('scene', this.store.createRecord('scene'), {});
+		this.set('scene', this.store.createRecord('scene', {}));
 	},
 	
 	actions: {
@@ -53,9 +55,9 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 					});
 					for (var i = 0; i < layoutData.length; i++) {
 						var pixel = controller.store.createRecord('pixel', {
-							x: layoutData[i].point.x,
-							y: layoutData[i].point.y,
-							z: layoutData[i].point.z,
+							x: layoutData[i].point[0],
+							y: layoutData[i].point[1],
+							z: layoutData[i].point[2],
 							group: layoutData[i].group,
 							address: layoutData[i].address,
 						});
