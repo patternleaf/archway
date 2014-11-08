@@ -2,10 +2,18 @@
 
 Currently there are two things happening in this repo:
 
-1. A Chrome App which displays a model of Luminescence including ~2000 LEDs and acts as an [OPC server](https://github.com/zestyping/openpixelcontrol). Luminescence is an interactive installation at the Dairy Center in Boulder, CO. It will be opening in November 2014. This app has been used in the development of the installation. There aren't really any plans to improve upon it. 
-2. A more general-purpose WebGL OPC Server app which will be able to load a model, an OPC pixel layout, and save and restore camera states. Eventually I'd like to see this become a test/development environment for OPC-powered installations, if not an authoring environment.
+1. A Chrome App which displays a 3D model of "Luminescence", including ~2000 LEDs, and acts as an [OPC server](https://github.com/zestyping/openpixelcontrol). Luminescence is an interactive installation at the Dairy Center for the Arts in Boulder, CO. It will be opening in November 2014. This app has been used in the development of the installation. It's messy. There aren't really any plans to improve upon it.
+2. A more general-purpose WebGL OPC Server app which will be able to load a model, an OPC pixel layout, and save and restore camera states. Eventually I'd like to see this become a test/development environment for OPC-powered installations, if not an authoring environment. It's being built with [Ember](https://github.com/ember).
 
 The first app is in /code/chrome-opc-server while the second app is in /code/archway. Which is weird, considering the second is general purpose and the first is project-specific, but oh well. :) I think the general-purpose OPC app will be called "Archway". Maybe.
+
+## Running
+
+To run either app, fire up Chrome, go to the Preferences page, and show the Extensions tab. Click "Load Unpacked Extension" and point at the desired directory. If Archway moves along, perhaps it'll be available in the Chrome app store someday.
+
+## Udder
+
+Luminescence is being driven by partner project [udder](https://github.com/coil-lighting/udder), a flexible and lightweight OPC show renderer written in Java. I hope to integrate Archway with it: controls, a scripting environment ... who knows.
 
 ## Other Stuff
 

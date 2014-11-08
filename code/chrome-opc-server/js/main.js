@@ -27,6 +27,9 @@ var gLightRail1 = {
 			0.198,
 			0.292,
 			0.387,
+			// extra one, added during physical installation!
+			0.482,
+			
 			0.603,
 			0.697,
 			0.792,
@@ -258,6 +261,18 @@ function init() {
 			console.log('opc address ' + gOPCOrderedLights[i].opcAddress + ' already in use, physical light ' + i);
 		}
 		gPhysicallyOrderedLights[gOPCOrderedLights[i].opcAddress] = gOPCOrderedLights[i];
+	}
+	
+	// initially color by physical address
+	var color = new THREE.Color(0x7788ff);
+	for (i = 0; i < gPhysicallyOrderedLights.length; i++) {
+		color.offsetHSL(.001, 0, 0);
+		if (gSettings.useDeferredRenderer) {
+			gPhysicallyOrderedLights[i].color = color.clone();
+		}
+		else {
+			gPhysicallyOrderedLights[i].material.color = color.clone();
+		}
 	}
 	
 	//console.log('total cable required: ' + totalCableRequired);
@@ -526,13 +541,13 @@ function createLightsForRail(rail, railIndex) {
 				var sceneLight;
 				var sceneLightLabel = null;
 				if (gSettings.useDeferredRenderer) {
-					sceneLight = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
+					sceneLight = new THREE.PointLight(color, 0.5, 60);
 					sceneLight.opcAddress = opcAddress;
 				}
 				else {
 					sceneLight = new THREE.Mesh(
 						new THREE.SphereGeometry(0.5, 4, 4), 
-						new THREE.MeshBasicMaterial({ color: color.offsetHSL(.001, 0, 0) })
+						new THREE.MeshBasicMaterial({ color: color })
 					);
 					sceneLight.opcAddress = opcAddress;
 					//console.log(gOPCPointList.length + ' => ' + sceneLight.opcAddress);
@@ -558,8 +573,7 @@ function createLightsForRail(rail, railIndex) {
 				// }
 			}
 		
-		
-		
+
 			// var stripCurve = new THREE.SplineCurve(stripCurvePts);
 			// var lineGeo = new THREE.Geometry();
 			// lineGeo.vertices = stripCurve.getSpacedPoints(20);
@@ -588,37 +602,6 @@ function createLightsForRail(rail, railIndex) {
 			*/
 		});
 	});
-
-
-
-
-	/*
-	var nStrips = rail.nStrips[side];
-	var startU = rail.startOffsets[side];
-
-	for (var i = 0; i < nStrips; i++) {
-		var strip = getLightStrip(rail.totalLength, startU);
-		for (var j = 0; j < strip.points.length; j++) {
-			var l = new THREE.PointLight(color.offsetHSL(.001, 0, 0), 0.5, 60);
-			//var h = new THREE.PointLightHelper(l, 1);
-			var p = rail.curve.getPointAt(strip.points[j]);
-
-			l.position = new THREE.Vector3(0, p.y, p.x).add(rail.group.position);//.add(new THREE.Vector3(-2, 0, 0));
-			rail.lights.push(l);
-			gOPCPointList.push({ 
-				point: [l.position.x, l.position.y, l.position.z],
-				gate: railIndex
-			});
-			var max = _([l.position.x, l.position.y, l.position.z]).max();
-			if (max > gOPCMaxPointValue) {
-				gOPCMaxPointValue = max;
-			}
-			scene.add(l);
-			//scene.add(h);
-		}
-		startU += strip.total;
-	}
-	*/
 }
 
 $('#show-opc-layout').on('click', function() {
@@ -840,7 +823,24 @@ function setPixel(address, color) {
 	else {
 		gPhysicallyOrderedLights[address].material.color.setRGB(color.r, color.g, color.b);	
 	}
-		
+}
+
+function logABPattern() {
+	var pixels = [];
+	for (var i = 0; i < gPhysicallyOrderedLights.length; i++) {
+		// Bitwise ops use two's complement representation.
+		// @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Bitwise_Operators
+		// So use 127 as "8-bit" chunk to avoid negative numbers, then multiply the result by 2.
+		// Note that alpha bits are currently ignored.
+		var level = Math.floor(((i % 60) / 60) * 127);
+		if (Math.floor(i / 60) % 2 == 0) {
+			pixels.push(((level << 16) | (level << 8)) * 2);
+		}
+		else {
+			pixels.push(((level << 8) | (level << 24)) * 2);
+		}
+	}
+	console.log(JSON.stringify(pixels));
 }
 
 function handleSuspend() {
