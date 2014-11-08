@@ -2,8 +2,6 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 	version: 0.1,
 	scene: null,
 	
-	
-	
 	init: function() {
 		this._super();
 		this.set('scene', this.store.createRecord('scene', {}));
@@ -11,7 +9,16 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 	
 	actions: {
 		selectModel3dFile: function() {
-			
+			var fileFilter = [{
+				mimeTypes: ['text/*'],
+				extensions: ['dae']
+			}];
+			var controller = this;
+			chrome.fileSystem.chooseEntry({ type: 'openFile', accepts: fileFilter }, function(entry) {
+				if (entry) {
+					controller.loadModel3d(entry);
+				}
+			});
 		},
 		selectOPCLayoutFile: function() {
 			var fileFilter = [{
@@ -28,8 +35,31 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 	},
 
 
-	loadModel3d: function() {
-		
+	loadModel3d: function(entry) {
+		var controller = this;
+		entry.file(function(file) {
+			var reader = new FileReader();
+			reader.onerror = function() {
+				console.error('Could not read collada file ', arguments);
+			};
+			reader.onload = function(event) {
+				var loader = new THREE.ColladaLoader();
+				var xmlParser = new DOMParser();
+				var responseXML = xmlParser.parseFromString(event.target.result, 'application/xml');
+				loader.options.convertUpAxis = true;
+				loader.parse(responseXML, function (collada) {
+					var dae = collada.scene;
+					dae.scale.x = dae.scale.y = dae.scale.z = 1;
+					dae.updateMatrix();
+					//modifyModelMesh(dae, 'root');
+					controller.set('scene.model3d.data', dae);
+					controller.triggerAction({
+						action: 'updateScene'
+					});
+				});
+			};
+			reader.readAsText(file);
+		});
 	},
 	
 	loadLayout: function(entry) {

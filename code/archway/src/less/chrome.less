@@ -1,8 +1,13 @@
 header, footer {
 	z-index:20;
+	position:relative;
 }
+
+@menu-bg-color: rgba(50, 50, 50, 0.4);
+@menu-border-color: rgba(255, 255, 255, 0.1);
+
 header {
-	padding: 20px;
+	padding: 10px 10px;
 	.masthead-brand > .item {
 		font-weight:bold;
 	}
@@ -14,25 +19,32 @@ header {
 			padding:5px 10px;
 			position:relative;
 			
+			border: 1px solid transparent;
+			
+			&:hover {
+				border:1px solid @menu-border-color;
+				border-bottom: none;
+			}
+			
 			ul {
 				position:absolute;
 				cursor:pointer;
 				top:30px;
-				left:0;
+				left:-1px;
 				display:none;
 				width:150px;
-				background:rgba(0, 0, 0, 0.2);
-				// border:1px solid rgba(255, 255, 255, 0.1);
-				// border-top:none;
-				border-bottom-right-radius:3px;
-				border-bottom-left-radius:3px;
+				background:@menu-bg-color;
+				border:1px solid @menu-border-color;
+				border-top:none;
+				// border-bottom-right-radius:3px;
+				// border-bottom-left-radius:3px;
 				padding: 5px 0;
 				margin-left:0;
 				
 				li {
 					a {
 						display:block;
-						width:calc(100% - 10px);
+						width:100%;
 						padding:4px 5px;
 						
 						&:hover {
@@ -53,7 +65,7 @@ header {
 			}
 			
 			&:hover {
-				background:rgba(0, 0, 0, 0.2);
+				background: @menu-bg-color;
 				ul {
 					display:block;
 				}

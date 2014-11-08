@@ -7,10 +7,39 @@ App.SceneView = Ember.View.extend({
 	threeScene: null,
 	threeCamera: null,
 	threeControls: null,
+	appCameraState: {
+		x: 0, 
+		y: 0, 
+		z: 0,
+		lat: 0,
+		lon: 0,
+		phi: 0,
+		theta: 0
+	},
+	lastSceneCameraState: {
+		x: 0, 
+		y: 0, 
+		z: 0,
+		lat: 0,
+		lon: 0,
+		phi: 0,
+		theta: 0
+	},
+	sceneCameraState: {
+		x: 0, 
+		y: 0, 
+		z: 0,
+		lat: 0,
+		lon: 0,
+		phi: 0,
+		theta: 0
+	},
 	threeRenderer: null,
 	clock: null,
 	viewIsAnimating: false,
 	opcSceneLights: [],
+	sceneModel: null,
+	sceneModelAncestors: [],
 	viewInited: false,
 	initThreeView: function() {
 		var $container = this.$('#three-view-container');
@@ -25,6 +54,7 @@ App.SceneView = Ember.View.extend({
 		);
 	
 		this.threeScene = new THREE.Scene();
+		this.updateSceneLights();
 		
 		if (cameraModel.get('useDeferredRenderer')) {
 			this.threeRenderer = new THREE.WebGLDeferredRenderer({
@@ -63,6 +93,8 @@ App.SceneView = Ember.View.extend({
 		}
 		this.set('viewInited', true);
 		this.updateOPCPixels();
+		this.updateModel3d();
+		
 	}.on('didInsertElement'),
 	
 	isAnimating: function() {
@@ -79,6 +111,36 @@ App.SceneView = Ember.View.extend({
 			this.set('viewIsAnimating', true);
 		}
 	}.observes('controller.isAnimating'),
+
+	updateSceneLights: function() {
+		this.threeScene.add(new THREE.AmbientLight(0x444444));
+		
+		var directionalLight = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0x555544 );
+		var directionalLight2 = new THREE.DirectionalLight(/*Math.random() * 0xffffff*/0x444466 );
+		directionalLight.position.x = 200;
+		directionalLight.position.y = 800;
+		directionalLight.position.z = -50;
+		//directionalLight.position.normalize();
+		directionalLight.castShadow = true;
+		directionalLight.shadowCameraLeft = -100;
+		directionalLight.shadowCameraRight = 600;
+		directionalLight.shadowCameraTop = 400;
+		directionalLight.shadowCameraBottom = -200;
+		directionalLight.shadowBias = 0.0001;
+		directionalLight.shadowDarkness = 0.5;
+		directionalLight.shadowMapWidth = 2048;//SHADOW_MAP_WIDTH;
+		directionalLight.shadowMapHeight = 2048;//SHADOW_MAP_HEIGHT;
+		//directionalLight.shadowCameraVisible = true;
+	
+		directionalLight2.position.x = 100;
+		directionalLight2.position.y = 300;
+		directionalLight2.position.z = 20;
+		directionalLight2.position.normalize();
+		//directionalLight2
+	
+		this.threeScene.add(directionalLight);
+		this.threeScene.add(directionalLight2);
+	},
 
 	updateOPCPixels: function() {
 		if (this.get('viewInited')) {
@@ -116,10 +178,51 @@ App.SceneView = Ember.View.extend({
 		}
 	}.observes('controller.scene.opcLayout'),
 	
+	updateModel3d: function() {
+		if (this.get('viewInited')) {
+			if (this.sceneModel) {
+				this.threeScene.remove(this.sceneModel);
+				this.sceneModel = null;
+				this.sceneModelAncestors = [];
+			}
+			this.sceneModel = this.get('controller.scene.model3d.data');
+			//console.log(this.sceneModel);
+			//this.modifyModelMesh(this.sceneModel, 'root')
+			
+			this.threeScene.add(this.sceneModel);
+		}
+	}.observes('controller.scene.model3d.data'),
+	
+	modifyModelMesh: function(parent, parentName) {
+		var archMaterial = new THREE.MeshLambertMaterial({ color: 0x777777 });
+		var buildingMaterial = new THREE.MeshLambertMaterial({ color: 0x999999 });
+		var view = this;
+		if (_(parent).has('children')) {
+			_(parent.children).each(function(child) {
+				if (child instanceof THREE.Mesh) {
+					if (_(view.sceneModelAncestors).any(function(name) { return name.indexOf('gate-') == 0; })) {
+						child.material = archMaterial;
+						child.castShadow = true;
+					}
+					else {
+						child.material = buildingMaterial;
+						//child.castShadow = true;
+						child.receiveShadow = true;
+					}
+				}
+				view.sceneModelAncestors.push(child.name);
+				view.modifyModelMesh(child, child.name);
+				view.sceneModelAncestors.pop();
+			});	
+		}
+	},
+	
 	animate: function() {
 		var delta = this.clock.getDelta();
 		var elapsed = this.clock.getElapsedTime();
 		elapsed = elapsed % (Math.PI * 2);
+		
+		this.willRenderFrame();
 		
 		this.threeControls.update(delta);
 		this.renderThreeScene();
@@ -131,9 +234,8 @@ App.SceneView = Ember.View.extend({
 		else {
 			this.set('viewIsAnimating', false);
 		}
-
-		//updateSettings();
 		
+		this.didRenderFrame();
 	},
 	
 	renderThreeScene: function() {
@@ -145,6 +247,75 @@ App.SceneView = Ember.View.extend({
 		this.threeCamera.aspect = window.innerWidth / window.innerHeight;
 		this.threeCamera.updateProjectionMatrix();
 
-		this.threeRenderer.setSize( window.innerWidth, window.innerHeight );
+		this.threeRenderer.setSize(window.innerWidth, window.innerHeight);
+	},
+	
+	willRenderFrame: function() {
+		var cameraModel = this.get('controller.scene.sceneCamera');
+		this.appCameraState = cameraModel.getProperties(
+			'x', 'y', 'z', 'lat', 'lon', 'phi', 'theta'
+		);
+		this.sceneCameraState = {
+			x: this.threeCamera.position.x,
+			y: this.threeCamera.position.y,
+			z: this.threeCamera.position.z,
+			lat: this.threeControls.lat,
+			lon: this.threeControls.lon,
+			phi: this.threeControls.phi,
+			theta: this.threeControls.theta
+		};
+		
+		this.readStateFromApp();
+	},
+	
+	didRenderFrame: function() {
+		
+		this.writeStateToApp();
+		
+		this.lastSceneCameraState.x = this.threeCamera.position.x;
+		this.lastSceneCameraState.y = this.threeCamera.position.y;
+		this.lastSceneCameraState.z = this.threeCamera.position.z;
+		this.lastSceneCameraState.lat = this.threeControls.lat;
+		this.lastSceneCameraState.lon = this.threeControls.lon;
+		this.lastSceneCameraState.phi = this.threeControls.phi;
+		this.lastSceneCameraState.theta = this.threeControls.theta;
+	},
+	
+	readStateFromApp: function() {
+		if (!this.cameraStatesEqual(this.appCameraState, this.sceneCameraState)) {
+			this.threeCamera.position.x = this.appCameraState.x;
+			this.threeCamera.position.y = this.appCameraState.y;
+			this.threeCamera.position.z = this.appCameraState.z;
+			this.threeControls.lat = this.appCameraState.lat;
+			this.threeControls.lon = this.appCameraState.lon;
+			this.threeControls.phi = this.appCameraState.phi;
+			this.threeControls.theta = this.appCameraState.theta;
+		}
+	},
+	
+	writeStateToApp: function() {
+		if (!this.cameraStatesEqual(this.lastSceneCameraState, this.sceneCameraState) &&
+			!this.cameraStatesEqual(this.sceneCameraState, this.appCameraState)) {
+			var cameraModel = this.get('controller.scene.sceneCamera');
+			cameraModel.setProperties({
+				x: this.threeCamera.position.x,
+				y: this.threeCamera.position.y,
+				z: this.threeCamera.position.z,
+				lat: this.threeControls.lat,
+				lon: this.threeControls.lon,
+				phi: this.threeControls.phi,
+				theta: this.threeControls.theta
+			});
+		}
+	},
+	
+	cameraStatesEqual: function(a, b) {
+		return 	a.x == b.x &&
+				a.y == b.y &&
+				a.z == b.z &&
+				a.lat == b.lat &&
+				a.lon == b.lon &&
+				a.phi == b.phi &&
+				a.theta == b.theta;
 	}
 });

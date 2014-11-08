@@ -6,9 +6,6 @@
 		{{else}}
 			<button id="toggle-play" {{action 'playAnimation'}}>Play</button>
 		{{/if}}
-		<button id="reset">Reset</button>
-		<button id="switch-renderers"></button>
-		<hr>
 	</div>
 	
 	<div id="legend" class="ui-overlay">
@@ -20,6 +17,11 @@
 			<dt>up</dt><dd>R</dd>
 			<dt>down</dt><dd>F</dd>
 			<dt>pan/tilt</dt><dd>click+drag mouse</dd>
+		</dl>
+		<dl>
+			<dt>x</dt><dd>{{input value=scene.sceneCamera.x type="number"}}</dd>
+			<dt>y</dt><dd>{{input value=scene.sceneCamera.y type="number"}}</dd>
+			<dt>z</dt><dd>{{input value=scene.sceneCamera.z type="number"}}</dd>
 		</dl>
 	</div>
 	
