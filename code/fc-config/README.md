@@ -1,0 +1,1 @@
+Note that we have two strips out of order in the physical rig. The last two outputs on FC 5 are spliced into OPC addresses sequentially following after the the first FC and before the second FC.
