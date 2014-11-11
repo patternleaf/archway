@@ -10,7 +10,7 @@ var gEventDispatcher = {};
 var kStripLength = 39.5;
 var kNLightsPerStrip = 60;
 var kLEDPitch = 0.66;
-var kInterStripOffset = 0;
+var kInterStripOffset = 0.5;
 
 var container;
 
@@ -255,6 +255,10 @@ function init() {
 		
 	});
 	
+	gOPCOrderedLights.sort(function(a, b) {
+		return a.opcAddress - b.opcAddress;
+	});
+	
 	//console.log(gPhysicallyOrderedLights.length + ' lights');
 	for (var i = 0; i < gOPCOrderedLights.length; i++) {
 		if (typeof gPhysicallyOrderedLights[gOPCOrderedLights[i].opcAddress] != 'undefined') {
@@ -440,7 +444,7 @@ function getLightStrip(length, startU) {
 		factor = 1 / length;
 
 	for (var i = 0; i < kNLightsPerStrip; i++) {
-		result.points.push(startU + kLEDPitch * factor * i);
+		result.points.push(startU + (kLEDPitch * factor * i));
 	}
 	result.total = kLEDPitch * factor * i + (kInterStripOffset * factor);
 	
@@ -470,14 +474,14 @@ function getStripPair(centerU, length) {
 		factor = 1 / length;
 	
 	for (var i = 0; i < kNLightsPerStrip; i++) {
-		result.points.up.push(centerU + (kInterStripOffset / 2 * factor) + i * kLEDPitch * factor);
+		result.points.up.push(centerU + (kInterStripOffset / 2 * factor) + (i * kLEDPitch * factor));
 	}
 	
 	result.endpoints.up.push(result.points[0]);
 	result.endpoints.up.push(result.points[result.points.length - 1]);
 	
 	for (i = 0; i < kNLightsPerStrip; i++) {
-		result.points.down.push(centerU - (kInterStripOffset / 2 * factor) - i * kLEDPitch * factor);
+		result.points.down.push(centerU - (kInterStripOffset / 2 * factor) - (i * kLEDPitch * factor));
 	}
 	
 	result.endpoints.down.push(result.points[kNLightsPerStrip]);
@@ -526,7 +530,8 @@ function createLightsForRail(rail, railIndex) {
 		scene.add(boxMesh);
 	
 		var pair = getStripPair(stripPairOffset, rail.totalLength);
-	
+		//console.log(pair);
+		
 		_(['down', 'up']).each(function(stripName) {
 			var stripCurvePts = [];
 			for (var i = 0; i < pair.points[stripName].length; i++) {
@@ -676,7 +681,9 @@ function getOPCLayout() {
 				address: pt.address
 			}; 
 		}
-	));
+	).sort(function(ptA, ptB) {
+		return ptA.address - ptB.address;
+	}));
 }
 
 function reloadSim() {
