@@ -1,6 +1,6 @@
 # Archway Project
 
-![Rendering of Luminescence](https://raw.github.com/patternleaf/archway/assets/video-images/night-closeup.png)
+![Rendering of Luminescence](https://raw.githubusercontent.com/patternleaf/archway/master/assets/video-images/night-closeup.png)
 
 Currently there are two things happening in this repo:
 
