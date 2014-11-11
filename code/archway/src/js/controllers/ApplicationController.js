@@ -31,6 +31,24 @@ App.ApplicationController = Ember.Controller.extend(Ember.TargetActionSupport, {
 					controller.loadLayout(entry);
 				}
 			});
+		},
+		showLegend: function() {
+			this.scene.set('showLegend', true);
+		},
+		hideLegend: function() {
+			this.scene.set('showLegend', false);
+		},
+		showClientControls: function() {
+			this.scene.set('showClientControls', true);
+		},
+		hideClientControls: function() {
+			this.scene.set('showClientControls', false);
+		},
+		showCameraControls: function() {
+			this.scene.set('showCameraControls', true);
+		},
+		hideCameraControls: function() {
+			this.scene.set('showCameraControls', false);
 		}
 	},
 

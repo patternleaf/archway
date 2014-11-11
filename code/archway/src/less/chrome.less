@@ -1,6 +1,7 @@
 header, footer {
 	z-index:20;
 	position:relative;
+	font-size:12px;
 }
 
 @menu-bg-color: rgba(50, 50, 50, 0.4);
@@ -70,6 +71,19 @@ header {
 					display:block;
 				}
 			}
+			
+			&.disabled {
+				color: #888;
+				
+				&:hover {
+					background:transparent;
+					ul {
+						display:none;
+					}
+				}
+			}
+			
+			
 		}
 	}
 }

@@ -8,6 +8,36 @@
 	border-radius:0.5em;
 	padding:0.5em;
 	z-index:20;
+	display:block;
+	
+	&.hidden {
+		display:none;
+	}
+	
+	input {
+		font-size: 10px;
+		padding: 0 5px;
+		line-height: 0;
+		color: white;
+		background: #555;
+		border: 1px solid #777;
+		max-width:100px;
+	}
+	
+	dl {
+		margin:0;
+		
+		dd, dt {
+			float:left;
+			min-width:80px;
+			display:block;
+			margin:0;
+			max-width:100px;
+		}
+		dt {
+			clear:left;
+		}
+	}
 }
 
 .ui-overlay.dark {
@@ -20,22 +50,19 @@
 	width:200px;
 }
 
-#legend dl {
-	margin:0;
-}
-#legend dd, #legend dt {
-	float:left;
-	min-width:80px;
-	display:block;
-	margin:0;
-}
-#legend dt {
-	clear:left;
-}
-
 #controls {
 	left:1em;
 	bottom:1em;
+}
+
+#camera {
+	top: 1em;
+	right:1em;
+	width:150px;
+	
+	dl dt {
+		min-width:35px;
+	}
 }
 
 #controls h1 {

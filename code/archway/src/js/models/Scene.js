@@ -3,6 +3,15 @@ App.Scene = DS.Model.extend({
 	opcLayout: DS.belongsTo('opcLayout'),
 	sceneCamera: DS.belongsTo('sceneCamera'),
 	
+	viewable: function() {
+		return (this.get('model3d').get('data') != null) || (this.get('opcLayout').get('pixels').length > 0);
+	}.property('model3d', 'opcLayout'),
+	
+	showCameraControls: DS.attr('boolean', { defaultValue: true }),
+	showLegend: DS.attr('boolean', { defaultValue: true }),
+	showClientControls: DS.attr('boolean', { defaultValue: true }),
+	showServerControls: DS.attr('boolean', { defaultValue: true }),
+	
 	init: function() {
 		this._super();
 		this.set('opcLayout', this.store.createRecord('opcLayout', {}));

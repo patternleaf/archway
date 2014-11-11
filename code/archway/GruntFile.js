@@ -105,6 +105,11 @@ module.exports = function(grunt) {
 					cwd: 'src/js/libs',
 					src: '**/*.js',
 					dest: 'build/app/js/libs/'
+				}, {
+					expand: true,
+					cwd: 'src/fonts',
+					src: '**/*',
+					dest: 'build/app/fonts/'
 				}/*, {
 					expand: true,
 					cwd: 'src/objects/',

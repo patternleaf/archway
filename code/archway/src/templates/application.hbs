@@ -11,26 +11,38 @@
 						</ul>
 					</li>
 					<li>
-						<span class="item">Model</span>
+						<span class="item">Scene</span>
 						<ul class="submenu">
-							<li><a href="#" {{action 'selectModel3dFile'}}>Load Model</a></li>
+							<li><a {{action 'selectModel3dFile'}}>Load Model</a></li>
+							<li><a {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
+							<li><a {{action 'saveSceneAs'}}>Save As &hellip;</a></li>
+							<li><a {{action 'saveScene'}}>Save</a></li>
 						</ul>
 					</li>
 					<li>
 						<span class="item">OPC</span>
 						<ul class="submenu">
-							{{#if opcLayout}}
-							<li class="disabled">Currently loaded: {{opcLayout.name}}</li>
-							{{/if}}
-							<li><a {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
 						</ul>
 					</li>
-					<li>
+
+					<li {{bind-attr class='scene.viewable::disabled'}}>
 						<span class="item">View</span>
 						<ul class="submenu">
-							<li>Show Client</li>
-							<li>Show Camera</li>
-							<li>Show Controls</li>
+							{{#if scene.showClientControls }}
+							<li><a {{action 'hideClientControls'}}><i class="fa fa-fw fa-check-square-o"></i> OPC Client Controls</a></li>
+							{{else}}
+							<li><a {{action 'showClientControls'}}><i class="fa fa-fw fa-square-o"></i> OPC Client Controls</a></li>
+							{{/if}}
+							{{#if scene.showCameraControls }}
+							<li><a {{action 'hideCameraControls'}}><i class="fa fa-fw fa-check-square-o"></i> Camera Controls</a></li>
+							{{else}}
+							<li><a {{action 'showCameraControls'}}><i class="fa fa-fw fa-square-o"></i> Camera Controls</a></li>
+							{{/if}}
+							{{#if scene.showLegend }}
+							<li><a {{action 'hideLegend'}}><i class="fa fa-fw fa-check-square-o"></i> Legend</a></li>
+							{{else}}
+							<li><a {{action 'showLegend'}}><i class="fa fa-fw fa-square-o"></i> Legend</a></li>
+							{{/if}}
 						</ul>
 					</li>
 					<li><span class="item">Options</span></li>

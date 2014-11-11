@@ -222,11 +222,12 @@ App.SceneView = Ember.View.extend({
 		var elapsed = this.clock.getElapsedTime();
 		elapsed = elapsed % (Math.PI * 2);
 		
-		this.willRenderFrame();
-		
 		this.threeControls.update(delta);
+		
+		this.willRenderFrame();
 		this.renderThreeScene();
-
+		this.didRenderFrame();
+		
 		if (this.isAnimating()) {
 			requestAnimationFrame(Ember.$.proxy(this.animate, this));
 			this.set('viewIsAnimating', true);
@@ -234,8 +235,6 @@ App.SceneView = Ember.View.extend({
 		else {
 			this.set('viewIsAnimating', false);
 		}
-		
-		this.didRenderFrame();
 	},
 	
 	renderThreeScene: function() {
@@ -265,13 +264,19 @@ App.SceneView = Ember.View.extend({
 			theta: this.threeControls.theta
 		};
 		
-		this.readStateFromApp();
+		var newSceneState = !this.cameraStatesEqual(this.sceneCameraState, this.lastSceneCameraState);
+		
+		// app has new state and our state hasn't changed since the last frame
+		if (!this.cameraStatesEqual(this.appCameraState, this.sceneCameraState) && 
+			!newSceneState) {
+			this.readStateFromApp();
+		} else if (newSceneState) {
+			this.writeStateToApp();
+		}
 	},
 	
 	didRenderFrame: function() {
-		
-		this.writeStateToApp();
-		
+
 		this.lastSceneCameraState.x = this.threeCamera.position.x;
 		this.lastSceneCameraState.y = this.threeCamera.position.y;
 		this.lastSceneCameraState.z = this.threeCamera.position.z;
@@ -282,31 +287,29 @@ App.SceneView = Ember.View.extend({
 	},
 	
 	readStateFromApp: function() {
-		if (!this.cameraStatesEqual(this.appCameraState, this.sceneCameraState)) {
-			this.threeCamera.position.x = this.appCameraState.x;
-			this.threeCamera.position.y = this.appCameraState.y;
-			this.threeCamera.position.z = this.appCameraState.z;
-			this.threeControls.lat = this.appCameraState.lat;
-			this.threeControls.lon = this.appCameraState.lon;
-			this.threeControls.phi = this.appCameraState.phi;
-			this.threeControls.theta = this.appCameraState.theta;
-		}
+		//console.log('reading from app camera state');
+		// not sure why we're getting strings as the values intead of numbers. :(
+		this.threeCamera.position.x = parseFloat(this.appCameraState.x);
+		this.threeCamera.position.y = parseFloat(this.appCameraState.y);
+		this.threeCamera.position.z = parseFloat(this.appCameraState.z);
+		this.threeControls.lat = parseFloat(this.appCameraState.lat);
+		this.threeControls.lon = parseFloat(this.appCameraState.lon);
+		this.threeControls.phi = parseFloat(this.appCameraState.phi);
+		this.threeControls.theta = parseFloat(this.appCameraState.theta);
 	},
 	
 	writeStateToApp: function() {
-		if (!this.cameraStatesEqual(this.lastSceneCameraState, this.sceneCameraState) &&
-			!this.cameraStatesEqual(this.sceneCameraState, this.appCameraState)) {
-			var cameraModel = this.get('controller.scene.sceneCamera');
-			cameraModel.setProperties({
-				x: this.threeCamera.position.x,
-				y: this.threeCamera.position.y,
-				z: this.threeCamera.position.z,
-				lat: this.threeControls.lat,
-				lon: this.threeControls.lon,
-				phi: this.threeControls.phi,
-				theta: this.threeControls.theta
-			});
-		}
+		var cameraModel = this.get('controller.scene.sceneCamera');
+		//console.log('writing to app camera state', this.sceneCameraState);
+		cameraModel.setProperties({
+			x: this.sceneCameraState.x,
+			y: this.sceneCameraState.y,
+			z: this.sceneCameraState.z,
+			lat: this.sceneCameraState.lat,
+			lon: this.sceneCameraState.lon,
+			phi: this.sceneCameraState.phi,
+			theta: this.sceneCameraState.theta
+		});
 	},
 	
 	cameraStatesEqual: function(a, b) {

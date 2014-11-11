@@ -2,13 +2,12 @@
 	<div id="three-view-container"></div>
 	<div id="controls" class="ui-overlay">
 		{{#if isAnimating }}
-			<button id="toggle-play" {{action 'pauseAnimation'}}>Pause</button>
+			<a {{action 'pauseAnimation'}}><i class="fa fa-fw fa-check-square-o"></i>Animating</a>
 		{{else}}
-			<button id="toggle-play" {{action 'playAnimation'}}>Play</button>
+			<a {{action 'playAnimation'}}><i class="fa fa-fw fa-square-o"></i>Animation Paused</a>
 		{{/if}}
 	</div>
-	
-	<div id="legend" class="ui-overlay">
+	<div id="legend" {{bind-attr class=":ui-overlay scene.showLegend::hidden"}}>
 		<dl>
 			<dt>fwd</dt><dd>W</dd>
 			<dt>back</dt><dd>S</dd>
@@ -18,11 +17,14 @@
 			<dt>down</dt><dd>F</dd>
 			<dt>pan/tilt</dt><dd>click+drag mouse</dd>
 		</dl>
+	</div>
+	<div id="camera" {{bind-attr class=":ui-overlay scene.showCameraControls::hidden"}}>
 		<dl>
 			<dt>x</dt><dd>{{input value=scene.sceneCamera.x type="number"}}</dd>
 			<dt>y</dt><dd>{{input value=scene.sceneCamera.y type="number"}}</dd>
 			<dt>z</dt><dd>{{input value=scene.sceneCamera.z type="number"}}</dd>
+			<dt>lat</dt><dd>{{input value=scene.sceneCamera.lat type="number"}}</dd>
+			<dt>lon</dt><dd>{{input value=scene.sceneCamera.lon type="number"}}</dd>
 		</dl>
 	</div>
-	
 </div>
