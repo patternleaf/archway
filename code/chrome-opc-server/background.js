@@ -4,6 +4,27 @@ var OPC_PORT = 7890,
 var gSimWindow;
 var gOPCFramesRecieved = 0;
 var gFrameReportTime = 0;
+var gServerSocketId = null,
+	gClientSocketId = null;
+var gClientDisconnectTimer = null,
+	kClientDefaultTimeout = 5000;
+
+
+// The opc frame being constructed currently.
+var gOPCFrame = { 
+	channel: 0, 
+	command: 0, 
+	pixels: null,
+	pixelsView: null,
+	pixelBytesReceived: -1,
+	reset: function() {
+		this.channel = 0;
+		this.command = 0;
+		this.pixels = null;
+		this.pixelsView = null;
+		this.pixelBytesReceived = -1;
+	}
+ };
 
 function trigger() {
 	if (gSimWindow && gSimWindow.contentWindow && gSimWindow.contentWindow.isReady) {
@@ -34,8 +55,17 @@ chrome.app.runtime.onLaunched.addListener(function() {
 		gSimWindow = createdWindow;
 	});
 
-	var gServerSocketId, gClientSocketId;
-	var onAccept = function(info) {
+	var resetServerConnection = function() {
+		gOPCFramesRecieved = 0;
+		gFrameReportTime = 0;
+		gOPCFrame.reset();
+		gClientSocketId = null;
+		gClientDisconnectTimer = null;
+		
+		chrome.sockets.tcp.onReceive.removeListener(handleTcpReceive);
+	};
+
+	var handleTcpAccept = function(info) {
 		if (info.socketId == gServerSocketId) {
 			// A new TCP connection has been established.
 			// chrome.sockets.tcp.send(info.clientSocketId, data, function(resultCode) {
@@ -43,7 +73,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
 			// });
 			// Start receiving data.
 			gClientSocketId = info.clientSocketId;
-			chrome.sockets.tcp.onReceive.addListener(onReceive);
+			chrome.sockets.tcp.onReceive.addListener(handleTcpReceive);
 			chrome.sockets.tcp.setPaused(gClientSocketId, false);
 			
 			trigger('tcpAccept', {
@@ -54,7 +84,7 @@ chrome.app.runtime.onLaunched.addListener(function() {
 		}
 	};
 	
-	var onAcceptError = function(info) {
+	var handleTcpAcceptError = function(info) {
 		if (info.socketId == gServerSocketId) {
 			console.error('TCP accept error: ', info.resultCode);
 			trigger('tcpAcceptError', { resultCode: info.resultCode });
@@ -65,16 +95,13 @@ chrome.app.runtime.onLaunched.addListener(function() {
 		return ((val & 0xFF) << 8) | ((val >> 8) & 0xFF);
 	}
 	
-	// The opc frame being constructed currently.
-	var gOPCFrame = { 
-		channel: 0, 
-		command: 0, 
-		pixels: null,
-		pixelsView: null,
-		pixelBytesReceived: -1
-	 };
-	var onReceive = function(info) {
+	var handleTcpReceive = function(info) {
 		if (info.socketId == gClientSocketId) {
+			
+			if (gClientDisconnectTimer) {
+				clearTimeout(gClientDisconnectTimer);
+			}
+			gClientDisconnectTimer = setTimeout(handleClientTimeout, kClientDefaultTimeout);
 			
 			var incomingPixelsView,
 				incomingPixelsViewSize,
@@ -147,21 +174,11 @@ chrome.app.runtime.onLaunched.addListener(function() {
 			debug('<-- packet exhausted');
 		}
 	};
-	
-	chrome.sockets.tcpServer.create({}, function(info) {
-		chrome.sockets.tcpServer.listen(info.socketId, '127.0.0.1', OPC_PORT, function(resultCode) {
-			if (resultCode < 0) {
-				console.log('Error listening: ' + chrome.runtime.lastError.message);
-				trigger('tcpListeningError', { message: chrome.runtime.lastError.message });
-			}
-			else {
-				gServerSocketId = info.socketId;
-				chrome.sockets.tcpServer.onAccept.addListener(onAccept);
-				chrome.sockets.tcpServer.onAcceptError.addListener(onAcceptError);
-				trigger('tcpListening', { port: OPC_PORT });
-			}
-		});
-	});
+		
+	var handleClientTimeout = function() {
+		trigger('tcpClientDisconnected')
+		resetServerConnection();
+	};
 	
 	var handleOPCFrame = function(frame) {
 		var time = new Date().valueOf();
@@ -178,6 +195,22 @@ chrome.app.runtime.onLaunched.addListener(function() {
 			gFrameReportTime = time;
 		}
 	};
+	
+	chrome.sockets.tcpServer.create({ name: 'archway-opc-socket' }, function(info) {
+		chrome.sockets.tcpServer.listen(info.socketId, '127.0.0.1', OPC_PORT, function(resultCode) {
+			// new connection made
+			if (resultCode < 0) {
+				console.log('Error listening: ' + chrome.runtime.lastError.message);
+				trigger('tcpListeningError', { message: chrome.runtime.lastError.message });
+			}
+			else {
+				gServerSocketId = info.socketId;
+				chrome.sockets.tcpServer.onAccept.addListener(handleTcpAccept);
+				chrome.sockets.tcpServer.onAcceptError.addListener(handleTcpAcceptError);
+				trigger('tcpListening', { port: OPC_PORT });
+			}
+		});
+	});
 });
 
 chrome.runtime.onSuspend.addListener(function() {

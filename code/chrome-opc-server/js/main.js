@@ -883,8 +883,15 @@ $(document).on('ready', function() {
 	window.isReady = true;
 });
 
-$(gEventDispatcher).on('tcpListening', function() {
+// Note it seems this can be fired before the window opens so we won't get it.
+$(gEventDispatcher).on('tcpListening', function(event, params) {
+	$('#server-connected').text('Awaiting client connection on port ' + params.port + '.');
 	console.log('tcpListening', arguments);
+});
+
+$(gEventDispatcher).on('tcpClientDisconnected', function(event, info) {
+	$('#server-connected').text('Client disconnected.');
+	$('.client-controls').hide();
 });
 
 $(gEventDispatcher).on('tcpAccept', function(event, info) {
