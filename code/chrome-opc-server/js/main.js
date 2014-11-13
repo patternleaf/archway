@@ -523,11 +523,11 @@ function createLightsForRail(rail, railIndex) {
 
 	_(rail.stripPairOffsets).each(function(stripPairOffset) {
 
-		var boxGeometry = new THREE.BoxGeometry(1, 1, 2);
-		var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0xff7700 }));
-		var boxParametricPos = rail.curve.getPointAt(stripPairOffset);
-		boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
-		scene.add(boxMesh);
+		// var boxGeometry = new THREE.BoxGeometry(1, 1, 2);
+		// var boxMesh = new THREE.Mesh(boxGeometry, new THREE.MeshBasicMaterial({ color: 0xff7700 }));
+		// var boxParametricPos = rail.curve.getPointAt(stripPairOffset);
+		// boxMesh.position = new THREE.Vector3(0, boxParametricPos.y, boxParametricPos.x).add(rail.group.position);
+		// scene.add(boxMesh);
 	
 		var pair = getStripPair(stripPairOffset, rail.totalLength);
 		//console.log(pair);
