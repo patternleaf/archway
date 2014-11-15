@@ -913,10 +913,33 @@ $(gEventDispatcher).on('opcFrameReport', function(event, info) {
 	$('#opc-frames-received').text('Frames received: ' + info.nFrames);
 });
 
-$('#mixer-0-level').on('change', function(event) {
-	sendUdderCommand('/mixer0', { state: JSON.stringify({ level: $('#mixer-0-level').val() }) });
+// temp: put in a bunch of sliders for controlling levels.
+for (var i = 0; i < 22; i++) {
+	$('#layer-level-controls').append('\
+		<input type="range" min="0" max="1" value="0" step="0.1" id="layer-' + i + '-level">\
+	');
+	(function(layerNum) {
+		$('#layer-level-controls #layer-' + i + '-level').on('change', function(event) {
+			sendUdderCommand('/mixer0/layer' + layerNum, { state: JSON.stringify({ level: $(this).val() }) });
+		});
+	})(i);
+}
+
+$('#layer-level-controls-header').on('click', function() {
+	$('#layer-level-controls').slideToggle(function() {
+		if ($('#layer-level-controls:visible').length) {
+			$('#layer-level-controls-header').html('[-] Layer Levels');
+		}
+		else {
+			$('#layer-level-controls-header').html('[+] Layer Levels');
+		}
+	});
 });
 
+// $('#mixer-0-level').on('change', function(event) {
+// 	sendUdderCommand('/mixer0', { state: JSON.stringify({ level: $('#mixer-0-level').val() }) });
+// });
+/*
 $('#scroll-test-blip').on('click', function(event) {
 	sendUdderCommand('/mixer0/layer3/effect', { state: JSON.stringify({ pixels:
 		[
@@ -927,7 +950,7 @@ $('#scroll-test-blip').on('click', function(event) {
 		]
 	}) });
 });
-
+*/
 // http://stackoverflow.com/questions/1985260/javascript-array-rotate
 Array.prototype.rotate = (function() {
 	// save references to array functions to make lookup faster
