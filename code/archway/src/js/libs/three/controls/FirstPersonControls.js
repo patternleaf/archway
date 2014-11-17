@@ -107,7 +107,8 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 		}
 
 		this.mouseDragOn = true;
-
+		
+		this.requestUpdate();
 	};
 
 	this.onMouseUp = function ( event ) {
@@ -127,7 +128,8 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 		}
 
 		this.mouseDragOn = false;
-
+		
+		this.requestUpdate();
 	};
 
 	this.onMouseMove = function ( event ) {
@@ -144,6 +146,7 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		}
 
+		this.requestUpdate();
 	};
 
 	this.onKeyDown = function ( event ) {
@@ -171,6 +174,7 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 
 		}
 
+		this.requestUpdate();
 	};
 
 	this.onKeyUp = function ( event ) {
@@ -193,7 +197,9 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 			case 70: /*F*/ this.moveDown = false; break;
 
 		}
-
+		
+		this.requestUpdate();
+		
 	};
 
 	this.update = function( delta ) {
@@ -282,6 +288,12 @@ THREE.FirstPersonControls = function ( object, domElement ) {
 	// so mouse-up over UI works too.
 	window.addEventListener( 'mouseup', bind(this, this.onMouseUp), false );
 
+	this.requestUpdate = function() {
+		if (typeof $ != 'undefined') {
+			$(this).trigger('updateRequested');
+		}
+	};
+	
 	function bind( scope, fn ) {
 
 		return function () {

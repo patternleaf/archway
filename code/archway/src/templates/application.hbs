@@ -13,10 +13,32 @@
 					<li>
 						<span class="item">Scene</span>
 						<ul class="submenu">
-							<li><a {{action 'selectModel3dFile'}}>Load Model</a></li>
-							<li><a {{action 'selectOPCLayoutFile'}}>Load OPC Layout</a></li>
-							<li><a {{action 'saveSceneAs'}}>Save As &hellip;</a></li>
-							<li><a {{action 'saveScene'}}>Save</a></li>
+							<li>
+								<a {{action 'openScene'}} {{bind-attr class="commandOpenSceneEnabled:enabled:disabled"}}>
+									Open &hellip; <span class="command-key">&#8984;O</span>
+								</a>
+							</li>
+							<li>
+								<a {{action 'saveSceneAs'}} {{bind-attr class="commandSaveSceneAsEnabled:enabled:disabled"}}>
+									Save As &hellip; <span class="command-key">&#8679;&#8984;S</span>
+								</a>
+							</li>
+							<li>
+								<a {{action 'saveScene'}} {{bind-attr class="commandSaveSceneEnabled:enabled:disabled"}}>
+									Save <span class="command-key">&#8984;S</span>
+								</a>
+							</li>
+							<li><hr></li>
+							<li>
+								<a {{action 'selectModel3dFile'}} {{bind-attr class="commandSelectModel3dFileEnabled:enabled:disabled"}}>
+									Load Model
+								</a>
+							</li>
+							<li>
+								<a {{action 'selectOPCLayoutFile'}} {{bind-attr class="commandSelectOPCLayoutFileEnabled:enabled:disabled"}}>
+									Load OPC Layout
+								</a>
+							</li>
 						</ul>
 					</li>
 					<li>

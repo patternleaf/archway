@@ -1,11 +1,8 @@
 <div class="scene-view">
 	<div id="three-view-container"></div>
-	<div id="controls" class="ui-overlay">
-		{{#if isAnimating }}
-			<a {{action 'pauseAnimation'}}><i class="fa fa-fw fa-check-square-o"></i>Animating</a>
-		{{else}}
-			<a {{action 'playAnimation'}}><i class="fa fa-fw fa-square-o"></i>Animation Paused</a>
-		{{/if}}
+	<input type="text" class="focus-proxy" id="three-view-container-focus-proxy">
+	<div id="opc-controls" class="ui-overlay">
+		<h3>OPC Server</h3>
 	</div>
 	<div id="legend" {{bind-attr class=":ui-overlay scene.showLegend::hidden"}}>
 		<dl>
@@ -15,16 +12,16 @@
 			<dt>truck right</dt><dd>D</dd>
 			<dt>up</dt><dd>R</dd>
 			<dt>down</dt><dd>F</dd>
-			<dt>pan/tilt</dt><dd>click+drag mouse</dd>
+			<dt>pan/tilt</dt><dd>mouse</dd>
 		</dl>
 	</div>
 	<div id="camera" {{bind-attr class=":ui-overlay scene.showCameraControls::hidden"}}>
 		<dl>
-			<dt>x</dt><dd>{{input value=scene.sceneCamera.x type="number"}}</dd>
-			<dt>y</dt><dd>{{input value=scene.sceneCamera.y type="number"}}</dd>
-			<dt>z</dt><dd>{{input value=scene.sceneCamera.z type="number"}}</dd>
-			<dt>lat</dt><dd>{{input value=scene.sceneCamera.lat type="number"}}</dd>
-			<dt>lon</dt><dd>{{input value=scene.sceneCamera.lon type="number"}}</dd>
+			<dt>x</dt><dd>{{input value=scene.sceneCamera.x type="number" step="any"}}</dd>
+			<dt>y</dt><dd>{{input value=scene.sceneCamera.y type="number" step="any"}}</dd>
+			<dt>z</dt><dd>{{input value=scene.sceneCamera.z type="number" step="any"}}</dd>
+			<dt>lat</dt><dd>{{input value=scene.sceneCamera.lat type="number" step="any"}}</dd>
+			<dt>lng</dt><dd>{{input value=scene.sceneCamera.lng type="number" step="any"}}</dd>
 		</dl>
 	</div>
 </div>

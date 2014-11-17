@@ -1,4 +1,9 @@
 .ui-overlay {
+	h3 {
+		font-size:14px;
+		font-weight:bold;
+	}
+	
 	position:absolute;
 	color:#ddd;
 	font-size:12px;
@@ -47,10 +52,17 @@
 #legend {
 	right:1em;
 	bottom:1em;
-	width:200px;
+	width:150px;
+	
+	dt {
+		min-width:100px;
+	}
+	dd {
+		min-width:20px;
+	}
 }
 
-#controls {
+#opc-controls {
 	left:1em;
 	bottom:1em;
 }
@@ -63,29 +75,6 @@
 	dl dt {
 		min-width:35px;
 	}
-}
-
-#controls h1 {
-	margin-top:1.5em;
-	font-size:14px;
-
-}
-#controls h1:first-child {
-	margin-top:0;
-}
-#controls h2 {
-	font-size:12px;
-	margin:0.25em;
-}
-#controls input[type=number] {
-	width:50px;
-}
-#controls .n-strips {
-	color:#aaa;
-}
-
-#controls button {
-	display:block;
 }
 
 #opc-modal {

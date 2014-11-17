@@ -52,8 +52,20 @@ header {
 							text-decoration:none;
 							color:rgba(10, 10, 70, 0.9);
 							background:rgba(255, 255, 255, 0.6);
-							text-shadow:none;
 						}
+						
+						.command-key {
+							float:right;
+						}
+						
+						&.disabled {
+							cursor:default;
+							color:#666;
+							&:hover {
+								background:transparent;
+							}
+						}
+						
 					}
 					padding:0;
 					list-style:none;
@@ -61,6 +73,10 @@ header {
 					
 					&:last-child {
 						margin-bottom:0;
+					}
+					
+					hr {
+						color:#888;
 					}
 				}
 			}
