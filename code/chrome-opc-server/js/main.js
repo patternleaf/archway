@@ -569,7 +569,7 @@ function createLightsForRail(rail, railIndex) {
 					point: [sceneLight.position.x, sceneLight.position.y, sceneLight.position.z],
 					gate: railIndex,
 					//address: opcAddress
-					address: gOPCPointList.length
+					address: opcAddress
 				});
 
 				scene.add(sceneLight);
