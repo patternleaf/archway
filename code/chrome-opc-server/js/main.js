@@ -993,7 +993,44 @@ $(gEventDispatcher).on('opcFrameReport', function(event, info) {
 	$('#opc-frames-received').text('Frames received: ' + info.nFrames);
 });
 
+
+$('#toggle-shuffle').on('click', function() {
+	var $this = $(this);
+	if ($this.html() == 'Shuffle Off') {
+		sendUdderCommand('/mixer0/subscriber0', { state: JSON.stringify({ enabled: false }) });
+		$this.html('Shuffle On');
+	}
+	else {
+		sendUdderCommand('/mixer0/subscriber0', { state: JSON.stringify({ enabled: true }) });
+		$this.html('Shuffle Off');
+	}
+});
+
+$('#toggle-shuffle-speed').on('click', function() {
+	var $this = $(this);
+	if ($this.html() == 'Shuffle Fast') {
+		sendUdderCommand('/mixer0/subscriber0', { state: JSON.stringify({ cueDurationMillis: 1000 }) });
+		$this.html('Shuffle Slow');
+	}
+	else {
+		sendUdderCommand('/mixer0/subscriber0', { state: JSON.stringify({ cueDurationMillis: 60000 }) });
+		$this.html('Shuffle Fast');
+	}
+});
+$('#restart-woven').on('click', function() {
+	var $this = $(this);
+	sendUdderCommand('/mixer0/layer1', { state: JSON.stringify({ level: 0.0 }) });
+	setTimeout(function() {
+		sendUdderCommand('/mixer0/layer1', { state: JSON.stringify({ level: 1.0 }) });
+	}, 1);
+	// kill other layers ... ? 
+	for (var i = 2; i < 18; i++) {
+		sendUdderCommand('/mixer0/layer' + i, { state: JSON.stringify({ level: 0.0 }) });
+	}
+});
+
 // temp: put in a bunch of sliders for controlling levels.
+/*
 for (var i = 0; i < 22; i++) {
 	$('#layer-level-controls').append('\
 		<input type="range" min="0" max="1" value="0" step="0.1" id="layer-' + i + '-level">\
@@ -1015,22 +1052,11 @@ $('#layer-level-controls-header').on('click', function() {
 		}
 	});
 });
-
-// $('#mixer-0-level').on('change', function(event) {
-// 	sendUdderCommand('/mixer0', { state: JSON.stringify({ level: $('#mixer-0-level').val() }) });
-// });
-/*
-$('#scroll-test-blip').on('click', function(event) {
-	sendUdderCommand('/mixer0/layer3/effect', { state: JSON.stringify({ pixels:
-		[
-			4286578943,4269933055,4253287167,4236641279,4219995391,4203349503,
-			4186703615,4170057727,4153411839,4136765951,4120120063,4103474175,
-			4086828287,4070182399,4053536511,4036890623,4020244735,4003598847,
-			3986952959,3970307071,3953661183,3937015295,3920369407,3903723519,
-		]
-	}) });
-});
 */
+
+
+
+
 // http://stackoverflow.com/questions/1985260/javascript-array-rotate
 Array.prototype.rotate = (function() {
 	// save references to array functions to make lookup faster
