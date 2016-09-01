@@ -597,7 +597,7 @@
 					}
 					else {
 						_this.trigger('localStoreUpdated', storage);
-						resolve();
+						resolve(storage);
 					}
 				});
 			});
@@ -614,7 +614,8 @@
 				catch (parseError) {
 					reject(parseError);
 				}
-				_this.writeToLocalStore().then(function() {
+				_this.writeToLocalStore().then(function(stored) {
+					console.log('wrote loaded JSON to local store', stored);
 					resolve();
 				}, function(error) {
 					reject(error);

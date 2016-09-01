@@ -10,7 +10,7 @@ App.SceneCamera = DS.Model.extend({
 	positionChanged: false,
 	
 	notifyPositionChange: function() {
-		//console.log('triggering positionChanged');
+		console.log('triggering positionChanged');
 		this.trigger('positionChanged', this.getProperties(
 			'x', 'y', 'z', 'lat', 'lng', 'phi', 'theta'
 		));

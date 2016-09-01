@@ -4,7 +4,7 @@ App = Ember.Application.create({
 
 App.Router.map(function() {
 	// implicit application and index routes ...
-	this.route('scene', { path: '/scene' });
+	this.resource('scene', { path: '/scene/:scene_id' });
 	this.route('about');
 });
 
