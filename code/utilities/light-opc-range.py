@@ -6,21 +6,32 @@ import sys
 import opc
 #import color_utils
 
+# light-opc-range --start <opc-address> --end <opc-address> [--blip] [--color r:ubyte g:ubyte b:ubyte]
 
 #-------------------------------------------------------------------------------
 # handle command line
 
-if len(sys.argv) == 1:
-    IP_PORT = '127.0.0.1:7890'
-elif len(sys.argv) == 2 and ':' in sys.argv[1] and not sys.argv[1].startswith('-'):
-    IP_PORT = sys.argv[1]
-else:
-    print
-    print '    Usage: raver_plaid.py [ip:port]'
-    print
-    print '    If not set, ip:port defauls to 127.0.0.1:7890'
-    print
-    sys.exit(0)
+#IP_PORT = '10.0.2.2:7890'
+IP_PORT = '127.0.0.1:7890'
+start_pixel = 1080
+end_pixel = 1200
+should_blip = False
+color = (256, 256, 256)
+
+for i, arg in enumerate(sys.argv):
+    if ':' in arg:
+        IP_PORT = arg
+    if '--start' in arg:
+        start_pixel = int(sys.argv[i + 1])
+    if '--end' in arg:
+        end_pixel = int(sys.argv[i + 1])
+    if '--blip' in arg:
+        should_blip = True
+    if '--color' in arg:
+        r = int(sys.argv[i + 1])
+        g = int(sys.argv[i + 2])
+        b = int(sys.argv[i + 3])
+        color = (r, g, b)
 
 
 #-------------------------------------------------------------------------------
@@ -54,11 +65,8 @@ def opcAddressToPhysicalAddress(opcAddress):
 
 
 fps = 30
-blip_time = 10
+blip_time = 5
 last_blip_start = 0
-
-start_pixel = 1080
-end_pixel = 1200
 n_blip_pixels = end_pixel - start_pixel
 n_total_pixels = 2280
 
@@ -76,14 +84,14 @@ while True:
     # black all
     opcPixels = [(0, 0, 0)] * n_total_pixels
     # print(blip_range_start + " " + blip_range_end)
+    
     for ii in range(n_total_pixels):
-        if (ii > blip_range_start and ii < blip_range_end) :
-            opcPixels[ii] = (256, 127, 127);
-        else :
-            opcPixels[ii] = (0, 0, 0);
-            #opcPixels.append((256, 127, 127))
-        #else :
-            #opcPixels.append((0, 0, 0))
+        if should_blip:
+            if (ii > blip_range_start and ii < blip_range_end) :
+                opcPixels[ii] = color
+        else:
+            if (ii >= start_pixel and ii <= end_pixel) :
+                opcPixels[ii] = color;
 
     client.put_pixels(opcPixels, channel=0)
     
