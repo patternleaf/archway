@@ -1,24 +1,21 @@
 var express = require('express'),
 	router = express.Router(),
-	SSH = require('simple-ssh');
+	SSH = require('simple-ssh'),
+	fs = require('fs');
 
 var kLocal = false,
-	config = {};
+	config = JSON.parse(fs.readFileSync('./config.json', { encoding: 'utf8' }));
 
-if (kLocal) {
-	config.hostname = '120.0.0.1';
-	config.scriptPath = '/Users/eric/Development/archway/code/utilities/light-opc-range.py';
-}
-else {
-	config.hostname = '50.246.208.133';
-	config.scriptPath = '/home/pi/archway-stuff/opc-utilities/light-opc-range.py';
-}
+// config: {
+//		hostname: <hostname>,
+//		scriptPath: <script-path>,
+//		username: <username>
+// }
 
 function send(commands) {
 	var ssh = new SSH({
 		host: config.hostname,
-		user: 'pi',
-		pass: 'Udder_P1'
+		user: config.username
 	});
 	try {
 		commands.forEach(function(command) {
