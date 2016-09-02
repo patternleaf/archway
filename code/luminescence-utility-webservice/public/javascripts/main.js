@@ -1,12 +1,12 @@
 (function() {
 	var driverNames = [], i, n, opcAddress;
 
-	// G1
+	// G1: 8 drivers
 	for (i = 0; i < 9; i++) {
 		driverNames.push('G1-' + i);
 	}
 	
-	// G2
+	// G2: 9 drivers
 	for (i = 0; i < 10; i++) {
 		driverNames.push('G2-' + i);
 	}
@@ -43,48 +43,8 @@
 		};
 	}
 
-	function sendDriverOn(driverName) {
-		console.log('driver on ', driverName);
-		$.post({
-			url: '/gateway',
-			data: {
-				start: driverMap[driverName].a.start,
-				end: driverMap[driverName].b.end
-			}
-		});
-	}
-	
-	function sendAllOff() {
-		console.log('posting to');
-		$.post({
-			url: '/gateway/kill-all',
-			data: {
-				dummy: 'blah'
-			}
-		});
-	}
-
 	$(document).ready(function() {
-		
-		driverNames.forEach(function(driverName) {
-			$('#driver-radio-buttons').append(
-				'<label>' + driverName + 
-				'<input type="radio" name="active-driver" data-driver-name="' + driverName + '">' +
-				'</label>\n'
-			);
-		});
-		
-		$('input[name=active-driver]').on('change', function() {
-			var $input = $('input[name=active-driver]:checked'),
-				driverName = $input.data('driver-name');
-			sendDriverOn(driverName)
-		});
-		
-		$('button[name=kill-all]').on('click', function() {
-			sendAllOff();
-			$('input[name=active-driver]:checked').prop('checked', false);
-			return false;
-		});
+
 	});
 
 })();
