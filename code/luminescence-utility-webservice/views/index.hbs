@@ -1,7 +1,80 @@
-<h1>Driver Test</h1>
+
+<h2 id="show-controls-section">Show Controls</h2>	
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Woven Show</h3>
+			</div>
+			<div class="panel-body">
+				<button class="btn btn-lg btn-default" name="woven-on">On</button>
+				<button class="btn btn-lg btn-default" name="woven-off">Off</button>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Woven Colors</h3>
+			</div>
+			<div class="panel-body">
+				<label class="colorpicker-title">Warp</label>
+				<div class="input-group colorpicker-component">
+					<input type="text" value="#00AABB" class="form-control" />
+					<span class="input-group-addon"><i></i></span>
+				</div>
+				<label class="colorpicker-title">Weft</label>
+				<div class="input-group colorpicker-component">
+					<input type="text" value="#00AABB" class="form-control" />
+					<span class="input-group-addon"><i></i></span>
+				</div>
+				<button class="btn btn-lg btn-default">Update</button>
+			</div>
+		</div>
+	</div><!-- /.col-md-4 -->
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Shuffle</h3>
+			</div>
+			<div class="panel-body">
+				<button class="btn btn-lg btn-default">On</button>
+				<button class="btn btn-lg btn-default">Off</button>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Shuffle Time</h3>
+			</div>
+			<div class="panel-body">
+				<input id="shuffle-speed-slider" data-slider-id="shuffle-speed" type="text" data-slider-min="1" data-slider-max="20" data-slider-step="0.1" data-slider-value="10"/>
+			</div>
+		</div>
+	</div><!-- /.col-md-4 -->
+
+</div>
+<h2 id="test-patterns-section">Test Patterns</h2>
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Blip</h3>
+			</div>
+			<div class="panel-body">
+				<button class="btn btn-lg btn-default" name="woven-on">On</button>
+				 <button class="btn btn-lg btn-default" name="woven-on">Off</button>
+			</div>
+		</div>
+	</div>
+</div>
+<h2 id="configuration-section">Configuration</h2>
+<!-- 
+1. select range (all, arch, driver, pixel range) (contiguous for now)
+2. do something to range: blip, color, 
+-->
+{{!--
 <form id="drivers">
 	
 </form>
 <form id="controls">
 	<button name="kill-all">All Off</button>
 </form>
+--}}

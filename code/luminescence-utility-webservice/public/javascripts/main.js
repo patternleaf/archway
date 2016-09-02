@@ -43,8 +43,35 @@
 		};
 	}
 
-	$(document).ready(function() {
+	
 
+	$(document).ready(function() {
+		$('.colorpicker-component').colorpicker();
+		$('#shuffle-speed-slider').slider({
+			formatter: function(value) {
+				return 'Current value: ' + value;
+			}
+		});
+		
+		$('button[name=woven-on]').on('click', function() {
+			$.post({ 
+				url: '/proxy/mixer0/layer1', 
+				data: { 
+					state: JSON.stringify({ level: 1.0 }) 
+				}
+			});
+			return false;
+		});
+		
+		$('button[name=woven-off]').on('click', function() {
+			$.post({ 
+				url: '/proxy/mixer0/layer1', 
+				data: { 
+					state: JSON.stringify({ level: 0.0 }) 
+				}
+			});
+			return false;
+		});
 	});
 
 })();
